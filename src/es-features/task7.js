@@ -39,7 +39,7 @@ export const task7New1 = () => {
 console.log('task7New1 :>> ', task7New1());
 
 // Решение №2, так кажется лучше, сложение объектов
-export const task7New2 = () => {
+export const task7New = () => {
   const obj1 = { test: 0 };
   const obj2 = { foo: 1, bar: 2 };
 
@@ -48,6 +48,6 @@ export const task7New2 = () => {
   return obj;
 };
 
-console.log('task7New2 :>> ', task7New2());
+console.log('task7New :>> ', task7New());
 
-export default task7New2;
+export default task7New;

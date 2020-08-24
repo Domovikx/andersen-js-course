@@ -39,7 +39,7 @@ Object.defineProperty(B.prototype, 'color', {
   },
 });
 
-function task10Old() {
+export function task10Old() {
   var b = new B('Max', 12);
   console.log(b.getName('Best')); // Max Best
   console.log(b.getAge()); // 12
@@ -87,7 +87,7 @@ class NewB extends NewA {
   }
 }
 
-function task10New() {
+export function task10New() {
   const b = new NewB('Max', 12);
 
   console.log(b.getName('Best')); // Max Best

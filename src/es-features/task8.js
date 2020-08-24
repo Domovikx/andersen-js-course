@@ -50,7 +50,7 @@ export const task8New1 = () => {
 console.log(task8New1());
 
 // Вариант второй, красивый, через filter()
-export const task8New2 = () => {
+export const task8New = () => {
   const obj = {
     nums: [0, 2, 5, 10, 15],
     calculateNumsFive() {
@@ -61,6 +61,6 @@ export const task8New2 = () => {
   return obj.calculateNumsFive();
 };
 
-console.log(task8New2());
+console.log(task8New());
 
-export default task8New2;
+export default task8New;
