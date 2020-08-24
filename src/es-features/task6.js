@@ -38,14 +38,11 @@ export const task6New = () => {
     cases: [{ id: '1' }],
   });
 
-  const tmp = userModule();
-  const name = tmp.name;
-  const value = tmp.value;
-  const role = tmp.role.name;
-  const isActive = tmp.isActive === undefined ? false : tmp.isActive;
-  const firstCaseId = tmp.cases[0].id;
+  const { name, value, role, cases } = userModule();
+  const isActive = !userModule().isActive ? false : userModule().isActive;
+  const firstCaseId = cases[0].id;
 
-  return [name, value, role, isActive, firstCaseId];
+  return [name, value, role.name, isActive, firstCaseId];
 };
 
 console.log(task6New());

@@ -22,7 +22,7 @@
  */
 
 export const transformArrayToNumber = (arr, callback, startValue) => {
-  let acc = startValue !== undefined ? startValue : 0;
+  let acc = !startValue ? 0 : startValue;
 
   arr.forEach((element) => {
     acc = callback(acc, element);
