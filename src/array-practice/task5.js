@@ -16,19 +16,21 @@
  * generator.next(); -> 'Complete!'
  */
 
-export function createGenerator(arr = []) {
+export function createGenerator(arr) {
+  const arrCopy = [...arr];
+
   return {
-    arr,
     next() {
-      if (!this.arr[0]) {
+      if (!arrCopy[0]) {
         return 'Complete!';
       }
-      return this.arr.shift();
+      return arrCopy.shift();
     },
   };
 }
 
-const generator = createGenerator([1, '6', 3, 2]);
+const arr = [1, '6', 3, 2];
+const generator = createGenerator(arr);
 console.log('generator :>> ', generator);
 
 console.log('generator.next(); :>> ', generator.next());
@@ -38,5 +40,7 @@ console.log('generator.next(); :>> ', generator.next());
 
 console.log('generator.next(); :>> ', generator.next());
 console.log('generator.next(); :>> ', generator.next());
+
+console.log('arr :>> ', arr);
 
 export default createGenerator;

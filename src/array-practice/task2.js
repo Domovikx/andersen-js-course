@@ -17,8 +17,8 @@
  */
 
 export const arrayDiff = (arr1, arr2) => {
-  const unique1 = arr1.filter((v) => arr2.indexOf(v) === -1);
-  const unique2 = arr2.filter((v) => arr1.indexOf(v) === -1);
+  const unique1 = arr1.filter((v) => !arr2.includes(v));
+  const unique2 = arr2.filter((v) => !arr1.includes(v));
   return [...unique1, ...unique2];
 };
 

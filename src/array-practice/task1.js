@@ -15,16 +15,7 @@
  * console.log(any([0, 0, 0, 0])); -> false
  */
 
-export const any = (arr = [], cb) => {
-  let find = false;
-  if (cb) {
-    find = arr.find((item) => cb(item));
-  } else {
-    find = arr.find((item) => Boolean(item));
-  }
-  return Boolean(find);
-};
-
+export const any = (arr = [], callback = (item) => Boolean(item)) => arr.some(callback);
 const arr1 = [0, 1, 2, 0];
 const arr2 = [0, 0, 1, 0];
 const arr3 = [0, 0, 0, 0];

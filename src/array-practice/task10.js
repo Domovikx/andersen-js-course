@@ -20,7 +20,7 @@
 // function membersOnActiveMeetups(meetups) {}
 
 export const membersOnActiveMeetups = (meetups) =>
-  meetups.reduce((acc, cur) => (cur.isActive ? acc + cur.members : acc), 0);
+  meetups.reduce((acc, { isActive, members }) => (isActive ? acc + members : acc), 0);
 
 const meetups = [
   { name: 'JavaScript', isActive: true, members: 100 },

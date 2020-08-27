@@ -73,7 +73,7 @@ class NewB extends NewA {
   }
 
   getName(text) {
-    return this.name + ' ' + text;
+    return `${super.getName()} ${text}`;
   }
 
   getAge() {
