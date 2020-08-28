@@ -90,7 +90,6 @@ class NewB extends NewA {
 
   set function(color) {
     this._color = color;
-    return this._color;
   }
 }
 

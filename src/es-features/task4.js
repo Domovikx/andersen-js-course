@@ -37,6 +37,7 @@ console.log('obj1.bar() :>> ', obj1.bar());
 export const task4New = () => {
   const x = 10;
   const y = 20;
+  const foo = () => 'test';
 
   const obj = {
     x,
@@ -44,17 +45,14 @@ export const task4New = () => {
     bar() {
       return this.x + this.y;
     },
+    [`baz${foo()}`]: 'new field',
   };
-
-  const foo = () => 'test';
-
-  obj[`baz${foo()}`] = 'new field';
 
   return obj;
 };
 
 const obj2 = task4New();
-console.log('obj2 :>> ', obj2);
-console.log('obj2.bar() :>> ', obj2.bar());
+console.log('obj2 :>> ', obj2); // {x: 10, y: 20, bar: function, baztest: 'new field'}
+console.log('obj2.bar() :>> ', obj2.bar()); // 30
 
 export default task4New;

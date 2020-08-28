@@ -13,9 +13,9 @@
  */
 
 // Решение по аналогии с алгоритмом таск №2, фильтруем уникальные значения
-export const without = (arr, ...arg) => arr.filter((v) => arg.indexOf(v) === -1);
+export const without = (arr, ...arg) => arr.filter((v) => !arg.includes(v));
 
-console.log(without([2, 1, 2, 3], 1, 2));
-console.log(without([2, 1, 10, 20], 1, 2));
+console.log(without([2, 1, 2, 3], 1, 2)); // [3]
+console.log(without([2, 1, 10, 20], 1, 2)); // [10, 20]
 
 export default without;
