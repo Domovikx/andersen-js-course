@@ -1,7 +1,4 @@
-@import 'rest';
-// @import 'fonts';
-// @import 'colors';
-// @import 'buttons';
+@import '_rest';
 
 *,
 html,
@@ -12,5 +9,5 @@ button {
   -moz-osx-font-smoothing: grayscale;
 }
 body {
-  background-color: #efefef;
+  background-color: #e0e0e0;
 }

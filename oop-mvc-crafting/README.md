@@ -64,6 +64,8 @@ sass --watch src/assets/scss:src/public/stylesheets // отслеживание 
 
 ## DEVELOP
 
+в начали посмотреть скрипты в package.json
+
 ```bash
 tsc // команда для компиляции
 tsc --watch // команда для автокомпиляции
@@ -71,3 +73,39 @@ sass --watch src/assets/scss:src/public/stylesheets // отслеживание 
 ```
 
 ---
+
+## Webpack подключение и настройка
+
+```bash
+npm install -D webpack // устанавливаем сам webpack
+npm install -D webpack-cli // webpack cli
+npm install -D html-webpack-plugin
+npm install -D clean-webpack-plugin
+
+npx webpack // тестовый запуск
+
+npm install -D webpack-dev-server // поставим сервер
+
+// работа с файлами
+npm install -D file-loader
+
+// для копирования статических файлов например favicon
+npm install -D copy-webpack-plugin
+
+// работа с css
+npm install -D style-loader // добавляет стили в head > style > html, это НЕ надо!
+npm install -D css-loader //
+// тут пробую делать минификацию
+npm install -D mini-css-extract-plugin // минификация css, работает но без minify
+npm install -D terser-webpack-plugin // minify css
+npm install -D optimize-css-assets-webpack-plugin // может это поможет
+
+// sass - ставим два пакета
+npm install -D node-sass // корневой функционал для sass/scss
+npm install -D sass-loader // для вебпака sass/scss
+
+// подключаем babel для поддержки последних фич жс
+npm install -D babel-loader @babel/core
+npm install --save @babel/polyfill // нужно ставить еще полифилы!
+npm install -D @babel/preset-typescript // поддержка TS
+```
