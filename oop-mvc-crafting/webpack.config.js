@@ -17,11 +17,11 @@ module.exports = {
 
   // входной файл
   entry: {
-    main: ['@babel/polyfill', './app.ts'],
+    main: ['@babel/polyfill', './main.ts'],
   },
 
   output: {
-    filename: '[name].[hash]'.js,
+    filename: `[name].[hash]`.js,
     path: path.resolve(__dirname, 'dist'),
   },
 
