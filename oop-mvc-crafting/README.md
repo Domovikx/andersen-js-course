@@ -119,4 +119,8 @@ npm install -D eslint
 npm install -D eslint-config-airbnb // базовые правила, не уверен что нужны
 npm install -D eslint-config-airbnb-typescript
 npm install -D @typescript-eslint/eslint-plugin
+
+// тестирую, для работы с html внутри ts
+npm install lit-html
+npm install -D typescript-lit-html-plugin typescript
 ```

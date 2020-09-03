@@ -1,5 +1,7 @@
 import store from '../redux/helpers/store';
 
+import { html, render } from 'lit-html';
+
 import {
   ingredientListPlus,
   ingredientListMinus,
@@ -16,41 +18,58 @@ export default class IngredientsList extends HTMLElement {
      * Получение стейта и его рендеринг
      */
     const ingredientsList = store.getState().ingredientsList;
-    const self = this; // ну вот я и дожил до этого, что self пишу...
 
-    function render(ingredientsList: any) {
-      const ul = document.createElement('ul');
-
+    const renderView = (ingredientsList: any) => {
+      const itemTemplates = [];
       for (let key in ingredientsList) {
-        const li = document.createElement('li');
-        li.dataset.id = `${key}`;
-        li.setAttribute('draggable', 'true');
-        ul.appendChild(li);
-        li.innerHTML =
-          `${key} : ${ingredientsList[key]} ` +
-          `<div class="btn-group">` +
-          `<button class="btn btn-lg material-icons" data-btn-value = "plus" data-btn-key=${key}>` +
-          `add_box` +
-          `</button> ` +
-          `<button class="btn btn-lg material-icons" data-btn-value = "minus" data-btn-key=${key}>` +
-          `indeterminate_check_box` +
-          `</button> ` +
-          `<button class="btn btn-lg material-icons" data-btn-value = "remove" data-btn-key=${key}>` +
-          `delete_sweep` +
-          `</button>` +
-          `</div>`;
+        itemTemplates.push(
+          html`
+            <li data-id=${key} draggable="true">
+              ${key} : ${ingredientsList[key]}
+              <div class="btn-group">
+                <button
+                  class="btn btn-lg material-icons"
+                  data-btn-value="plus"
+                  data-btn-key=${key}
+                >
+                  add_box
+                </button>
+                <button
+                  class="btn btn-lg material-icons"
+                  data-btn-value="minus"
+                  data-btn-key=${key}
+                >
+                  indeterminate_check_box
+                </button>
+                <button
+                  class="btn btn-lg material-icons"
+                  data-btn-value="remove"
+                  data-btn-key=${key}
+                >
+                  delete_sweep
+                </button>
+              </div>
+            </li>
+          `,
+        );
       }
 
-      self.innerHTML = `<h3>IngredientsList</h3>`;
-      self.appendChild(ul);
-    }
+      render(
+        html`
+          <ul>
+            ${itemTemplates}
+          </ul>
+        `,
+        this,
+      );
+    };
 
-    render(ingredientsList);
+    renderView(ingredientsList);
 
     // Подписывапемся на обновление стейта
     store.subscribe(() => {
       const state = store.getState();
-      render(state.ingredientsList);
+      renderView(state.ingredientsList);
     });
 
     /** ================= Controller =================
@@ -85,7 +104,7 @@ export default class IngredientsList extends HTMLElement {
 
     /** ================= Model =================
      * Управление состоянием и стейтом
-     * даже и не знаю что сюда написать,
+     * даже и не знаю что сюда в моем случае написать,
      * может быть имеет смысл сюда вынести switch (value) ...
      */
   }
