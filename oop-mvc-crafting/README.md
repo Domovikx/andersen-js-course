@@ -51,6 +51,8 @@ tsc // команда для компиляции
 tsc --watch // команда для автокомпиляции
 ```
 
+хорошая статья про настройку конфига - http://vanilla-js.blogspot.com/2018/02/typescript-tsconfigjson.html
+
 ---
 
 ## SASS
@@ -108,4 +110,13 @@ npm install -D sass-loader // для вебпака sass/scss
 npm install -D babel-loader @babel/core
 npm install --save @babel/polyfill // нужно ставить еще полифилы!
 npm install -D @babel/preset-typescript // поддержка TS
+```
+
+## eslint-config-airbnb-typescript
+
+```bash
+npm install -D eslint
+npm install -D eslint-config-airbnb // базовые правила, не уверен что нужны
+npm install -D eslint-config-airbnb-typescript
+npm install -D @typescript-eslint/eslint-plugin
 ```
