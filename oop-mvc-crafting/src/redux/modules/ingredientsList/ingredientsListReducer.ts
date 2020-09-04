@@ -25,15 +25,8 @@ export default function ingredientsListReducer(
 
     case INGREDIENT_LIST__REMOVE:
       key = payload.key;
-      if (confirm(`Вы уверены, удалить "${key}" ?`)) {
-        alert('Я очень рад, что мы это удалили !');
-        delete state[key];
-      } else {
-        alert('Всё ок, потом удалим...');
-      }
-      // тут стейт мутируется, но это и надо
-
-      return { ...state };
+      delete state[key];
+      return state;
 
     case INGREDIENT_LIST__ADD:
       key = payload.key;

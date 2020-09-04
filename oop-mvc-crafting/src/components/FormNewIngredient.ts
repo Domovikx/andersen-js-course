@@ -59,15 +59,17 @@ export default class FormNewIngredient extends HTMLElement {
     const btnAddNewIngredient: any = document.getElementById(
       'btn-add-new-ingredient',
     );
-    const FormNewIngredient: any = document.getElementById(
+    const formNewIngredient: any = document.getElementById(
       'form-new-ingredient',
     );
 
-    btnAddNewIngredient.addEventListener('click', onClick);
+    btnAddNewIngredient.addEventListener('click', onSubmitForm);
+    formNewIngredient.addEventListener('submit', onSubmitForm, false);
 
-    function onClick(event: Event | any) {
+    function onSubmitForm(event: Event | any) {
+      event.preventDefault();
       const target: Element = event.target;
-      const ingredientName: string = FormNewIngredient.ingredient_name.value;
+      const ingredientName: string = formNewIngredient.ingredient_name.value;
 
       const isIngredientNameExist = () => {
         const ingredientsList = store.getState().ingredientsList;

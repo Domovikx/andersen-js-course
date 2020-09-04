@@ -1,7 +1,7 @@
 import store from '../redux/helpers/store';
 import { html, render } from 'lit-html';
 
-import './IngredientsList.scss';
+import './ingredientsList.scss';
 
 import {
   ingredientListPlus,
@@ -96,7 +96,9 @@ export default class IngredientsList extends HTMLElement {
           return;
 
         case 'remove':
-          store.dispatch(ingredientListRemove(key));
+          if (confirm(`Вы уверены, удалить "${key}" ?`)) {
+            store.dispatch(ingredientListRemove(key));
+          }
           return;
 
         default:

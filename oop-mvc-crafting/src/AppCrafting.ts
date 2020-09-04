@@ -28,8 +28,8 @@ export default class AppCrafting extends HTMLElement {
 
     render(
       html`
-        <ingredients-list></ingredients-list>
         <form-new-ingredient></form-new-ingredient>
+        <ingredients-list></ingredients-list>
 
         <recipe-list></recipe-list>
         <form-new-recipe></form-new-recipe>
