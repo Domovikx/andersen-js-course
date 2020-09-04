@@ -1,6 +1,7 @@
 import store from '../redux/helpers/store';
-
 import { html, render } from 'lit-html';
+
+import './IngredientsList.scss';
 
 import {
   ingredientListPlus,
@@ -25,7 +26,7 @@ export default class IngredientsList extends HTMLElement {
         itemTemplates.push(
           html`
             <li data-id=${key} draggable="true">
-              ${key} : ${ingredientsList[key]}
+              <p>${key} : ${ingredientsList[key]}</p>
               <div class="btn-group">
                 <button
                   class="btn btn-lg material-icons"
@@ -56,6 +57,7 @@ export default class IngredientsList extends HTMLElement {
 
       render(
         html`
+          <h3>Ingredients list</h3>
           <ul>
             ${itemTemplates}
           </ul>

@@ -36,9 +36,8 @@ export default function ingredientsListReducer(
       return { ...state };
 
     case INGREDIENT_LIST__ADD:
-      console.log('INGREDIENT_LIST__ADD :>> 2');
-      console.log('action.payload :>> ', action.payload);
-      return { ...state, ...action.payload };
+      key = payload.key;
+      return { ...state, [key]: 1 };
 
     default:
       return state;

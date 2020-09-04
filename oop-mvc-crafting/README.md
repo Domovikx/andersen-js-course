@@ -121,6 +121,8 @@ npm install -D eslint-config-airbnb-typescript
 npm install -D @typescript-eslint/eslint-plugin
 
 // тестирую, для работы с html внутри ts
+// понравилось, оставляю - https://lit-html.polymer-project.org/guide/getting-started
 npm install lit-html
 npm install -D typescript-lit-html-plugin typescript
+
 ```
