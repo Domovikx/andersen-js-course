@@ -19,6 +19,8 @@ const initialState = {
       'Волшебно невероятная хрень написанная на русском языке': 1,
     },
   },
+
+  formNewRecipe: {},
 };
 
 export default initialState;

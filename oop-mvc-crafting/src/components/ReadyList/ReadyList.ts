@@ -1,4 +1,4 @@
-export default class ReadyList extends HTMLElement {
+export class ReadyList extends HTMLElement {
   constructor() {
     super();
   }

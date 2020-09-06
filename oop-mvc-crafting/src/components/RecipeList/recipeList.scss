@@ -1,12 +1,22 @@
 recipe-list {
   display: flex;
   flex-direction: column;
+  padding: 6px;
 
   .card-header {
+    display: block;
     transition: 0.5s;
+
     &:hover {
       background-color: #cd853f33;
     }
+  }
+
+  .card {
+    border-radius: 6px;
+  }
+  .card-header:first-child {
+    border-radius: 6px;
   }
 
   h3 {

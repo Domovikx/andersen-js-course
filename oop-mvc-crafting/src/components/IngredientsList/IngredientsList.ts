@@ -1,4 +1,4 @@
-import store from '../redux/helpers/store';
+import store from '../../redux/helpers/store';
 import { html, render } from 'lit-html';
 
 import './ingredientsList.scss';
@@ -7,9 +7,9 @@ import {
   ingredientListPlus,
   ingredientListMinus,
   ingredientListRemove,
-} from '../redux/modules/ingredientsList/ingredientsListAction';
+} from '../../redux/modules/ingredientsList/ingredientsListAction';
 
-export default class IngredientsList extends HTMLElement {
+export class IngredientsList extends HTMLElement {
   constructor() {
     super();
   }

@@ -1,16 +1,16 @@
-import store from '../redux/helpers/store';
+import store from '../../redux/helpers/store';
 import { html, render } from 'lit-html';
 
-import { ingredientListAdd } from '../redux/modules/formNewIngredient/formNewIngredientAction';
+import './formNewIngredient.scss';
 
-export default class FormNewIngredient extends HTMLElement {
+import { ingredientListAdd } from '../../redux/modules/formNewIngredient/formNewIngredientAction';
+
+export class FormNewIngredient extends HTMLElement {
   constructor() {
     super();
   }
 
   connectedCallback() {
-    this.innerHTML = 'FormNewIngredient';
-
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */

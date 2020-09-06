@@ -1,10 +1,10 @@
-import store from '../redux/helpers/store';
+import store from '../../redux/helpers/store';
 import { html, render } from 'lit-html';
 
 import './recipeList.scss';
-import { recipeListRemove } from '../redux/modules/recipeList/recipeListAction';
+import { recipeListRemove } from '../../redux/modules/recipeList/recipeListAction';
 
-export default class RecipeList extends HTMLElement {
+export class RecipeList extends HTMLElement {
   constructor() {
     super();
   }

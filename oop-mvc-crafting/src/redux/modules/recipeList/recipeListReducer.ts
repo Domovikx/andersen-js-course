@@ -6,14 +6,15 @@ export default function recipeListReducer(
   { type, payload }: any,
 ) {
   switch (type) {
-    case RECIPE_LIST__ADD:
-      // key = payload.key;
-      return { ...state };
-
     case RECIPE_LIST__REMOVE:
       let key = payload.key;
       delete state[key];
       return state;
+
+    case RECIPE_LIST__ADD:
+      key = payload.key;
+      let value = payload.value;
+      return { ...state, [key]: value };
 
     default:
       return state;

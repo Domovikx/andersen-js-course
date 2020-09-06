@@ -15,13 +15,13 @@ export default function ingredientsListReducer(
     case INGREDIENT_LIST__PLUS:
       let key = payload.key;
       let count = state[key] + 1;
-      return { ...state, [payload.key]: count };
+      return { ...state, [key]: count };
     // Это конечно можно еще всё рефакторить, но пока так
 
     case INGREDIENT_LIST__MINUS:
       key = payload.key;
       count = state[key] > 0 ? state[key] - 1 : 0;
-      return { ...state, [payload.key]: count };
+      return { ...state, [key]: count };
 
     case INGREDIENT_LIST__REMOVE:
       key = payload.key;

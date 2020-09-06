@@ -1,4 +1,4 @@
-export default class CraftingTable extends HTMLElement {
+export class CraftingTable extends HTMLElement {
   constructor() {
     super();
   }
