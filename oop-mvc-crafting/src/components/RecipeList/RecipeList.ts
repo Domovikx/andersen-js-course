@@ -112,7 +112,6 @@ export class RecipeList extends HTMLElement {
     }
 
     function onDragStart(event: any) {
-      // console.log('onDragStart 1 :>> ', event);
       const target = event.target;
       const key = target.getAttribute('data-btn-key');
       event.dataTransfer.setData('key', key);

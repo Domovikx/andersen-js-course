@@ -20,10 +20,10 @@ export function initRecipeList(recipeList: string | null) {
   };
 }
 
-export function addIngredient(key: string | null) {
+export function addIngredient(key: string | null, ingredientsList: any) {
   return {
     type: CRAFTING_TABLE__ADD_INGREDIENT,
-    payload: { key },
+    payload: { key, ingredientsList },
   };
 }
 

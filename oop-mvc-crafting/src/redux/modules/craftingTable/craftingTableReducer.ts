@@ -21,13 +21,23 @@ export default function craftingTableReducer(
       return { ...state, recipeList };
 
     case CRAFTING_TABLE__ADD_INGREDIENT:
+      key = payload.key;
+      const ingredientsList = payload.ingredientsList;
+      const ingredientInStock = ingredientsList[key];
+      const exists = state.recipeList[key].exists;
+
+      if (exists >= ingredientInStock) {
+        state.recipeList[key].exists = ingredientInStock;
+      } else if (exists < state.recipeList[key].required) {
+        state.recipeList[key].exists += 1;
+      }
       return { ...state };
 
     case CRAFTING_TABLE__START_CRAFTING:
       return { ...state };
 
     case CRAFTING_TABLE__CLEAR_FORM:
-      return {};
+      return initialState.craftingTable;
 
     default:
       return state;

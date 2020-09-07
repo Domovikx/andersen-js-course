@@ -2,9 +2,12 @@ import store from '../../redux/helpers/store';
 import { html, render } from 'lit-html';
 
 import './craftingTable.scss';
+
 import {
   addRecipe,
   initRecipeList,
+  clearForm,
+  addIngredient,
 } from '../../redux/modules/craftingTable/craftingTableAction';
 
 export class CraftingTable extends HTMLElement {
@@ -16,16 +19,18 @@ export class CraftingTable extends HTMLElement {
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
-    const craftingTable = store.getState().craftingTable;
+    const state = store.getState();
+    const craftingTable = state.craftingTable;
+    const ingredientsList = state.ingredientsList;
 
-    const renderView = (craftingTable: any) => {
+    const renderView = (craftingTable: any, ingredientsList: any) => {
       const recipeList = craftingTable.recipeList;
 
       render(
         html`
           <h3>Crafting Table</h3>
           <div class="input-group">
-            <span class="card crafting-table-recipe-place">
+            <span class="card" data-place-key="RECIPE_INPUT">
               ${craftingTable.recipeName}
             </span>
             <span class="input-group-append">
@@ -36,9 +41,10 @@ export class CraftingTable extends HTMLElement {
               >
                 Craft
               </button>
+
               <button
                 class="btn btn-outline-secondary material-icons"
-                data-btn-key="FORM_NEW_RECIPE__CLEAR_FORM"
+                data-btn-key="CRAFTING_TABLE__CLEAR_FORM"
               >
                 delete_sweep
               </button>
@@ -47,10 +53,14 @@ export class CraftingTable extends HTMLElement {
 
           <ul class="list-group">
             ${Object.entries(recipeList).map(
-              ([key, val]: any) =>
+              ([key, { exists, required }]: any) =>
                 html`
-                  <li class="list-group-item">
-                    ${key} : ${val[0]} из ${val[1]} (${val[2]})
+                  <li class="list-group-item" data-place-key=${key}>
+                    ${key} :
+                    ${exists <= ingredientsList[key]
+                      ? exists
+                      : ingredientsList[key]}
+                    из ${required} (${ingredientsList[key]})
 
                     <span class="btn-group">
                       <button
@@ -70,18 +80,13 @@ export class CraftingTable extends HTMLElement {
       );
     };
 
-    renderView(craftingTable);
+    renderView(craftingTable, ingredientsList);
 
     // Подписывапемся на обновление стейта
     store.subscribe(() => {
       const state = store.getState();
-      renderView(state.craftingTable);
+      renderView(state.craftingTable, state.ingredientsList);
     });
-    // store.subscribe(() => {
-    //   // console.log('state.craftingTable :>> ');
-    //   const state = store.getState();
-    //   renderView(state.ingredientsList);
-    // });
 
     /** ================= Controller =================
      * Подписка на события и управление
@@ -91,47 +96,32 @@ export class CraftingTable extends HTMLElement {
 
     this.addEventListener('drop', onDrop);
     this.addEventListener('dragover', onDragOver);
-    this.addEventListener('dragstart', onDragStart);
 
     function onClick(event: Event | any) {
-      // const target: Element = event.target;
-      // const key = target.getAttribute('data-btn-key');
-      // const value = target.getAttribute('data-btn-value');
-      // switch (value) {
-      //   case 'collapseAction':
-      //     return;
-      //   case 'removeAction':
-      //     return;
-      //   default:
-      //     return;
-      // }
+      const target: Element = event.target;
+      const key: any = target.getAttribute('data-btn-key');
+      const value = target.getAttribute('data-btn-value');
+
+      startAction(key, value);
     }
 
-    function onDragStart(event: Event) {
-      // console.log('onDrop 2 :>> ', event);
-      const target = event.target;
-    }
-
-    function onDragOver(event: Event) {
+    function onDragOver(event: any) {
       event.preventDefault();
-
-      const target = event.target;
-
-      const recipePlace = document.querySelector(
-        '.crafting-table-recipe-place',
-      );
+      // TODO: Сделать подсветку
+      // const target = event.target;
+      // const recipePlace = document.querySelector(
+      //   '.crafting-table-recipe-place',
+      // );
     }
 
     function onDrop(event: any) {
-      const target = event.target;
-      // console.log('target 2 :>> ', target);
       const key = event.dataTransfer.getData('key');
-      // console.log('key', key);
       const value = event.dataTransfer.getData('value');
-      // console.log('value', value);
-
       if (value === 'RECIPE') {
         startAction('CRAFTING_TABLE__ADD_RECIPE', key);
+      }
+      if (value === 'INGREDIENT') {
+        startAction('FORM_NEW_RECIPE__INGREDIENT_PLUS', key);
       }
     }
 
@@ -139,18 +129,26 @@ export class CraftingTable extends HTMLElement {
       switch (key) {
         case 'CRAFTING_TABLE__ADD_RECIPE':
           store.dispatch(addRecipe(value));
-
-          const recipeList = store.getState().recipeList[value];
-          const ingredientsList = store.getState().ingredientsList;
+          const state: any = store.getState();
+          const recipeList = state.recipeList[value];
           const initRecipeListData: any = {};
           Object.entries(recipeList).forEach(([key, val]: any) => {
-            initRecipeListData[key] = [0, val, ingredientsList[key]];
+            initRecipeListData[key] = {
+              exists: 0,
+              required: val,
+            };
           });
 
           store.dispatch(initRecipeList(initRecipeListData));
           return;
 
-        case 'removeAction':
+        case 'CRAFTING_TABLE__CLEAR_FORM':
+          store.dispatch(clearForm());
+          return;
+
+        case 'FORM_NEW_RECIPE__INGREDIENT_PLUS':
+          const ingredientsList: any = store.getState().ingredientsList;
+          store.dispatch(addIngredient(value, ingredientsList));
           return;
 
         default:

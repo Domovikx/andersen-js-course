@@ -25,26 +25,26 @@ export class IngredientsList extends HTMLElement {
       for (let key in ingredientsList) {
         itemTemplates.push(
           html`
-            <li data-id=${key} draggable="true" class="list-group-item">
+            <li data-key=${key} draggable="true" class="list-group-item">
               ${key} : ${ingredientsList[key]}
               <span class="btn-group">
                 <button
                   class="btn btn-lg material-icons"
-                  data-btn-value="plus"
+                  data-btn-value="INGREDIENT_LIST__PLUS"
                   data-btn-key=${key}
                 >
                   add_box
                 </button>
                 <button
                   class="btn btn-lg material-icons"
-                  data-btn-value="minus"
+                  data-btn-value="INGREDIENT_LIST__MINUS"
                   data-btn-key=${key}
                 >
                   indeterminate_check_box
                 </button>
                 <button
                   class="btn btn-lg material-icons"
-                  data-btn-value="remove"
+                  data-btn-value="INGREDIENT_LIST__REMOVE"
                   data-btn-key=${key}
                 >
                   delete_sweep
@@ -79,6 +79,7 @@ export class IngredientsList extends HTMLElement {
      */
 
     this.addEventListener('click', onClick);
+    this.addEventListener('dragstart', onDragStart);
 
     function onClick(event: Event | any) {
       const target: Element = event.target;
@@ -87,15 +88,15 @@ export class IngredientsList extends HTMLElement {
       const value = target.getAttribute('data-btn-value');
 
       switch (value) {
-        case 'plus':
+        case 'INGREDIENT_LIST__PLUS':
           store.dispatch(ingredientListPlus(key));
           return;
 
-        case 'minus':
+        case 'INGREDIENT_LIST__MINUS':
           store.dispatch(ingredientListMinus(key));
           return;
 
-        case 'remove':
+        case 'INGREDIENT_LIST__REMOVE':
           if (confirm(`Вы уверены, удалить "${key}" ?`)) {
             store.dispatch(ingredientListRemove(key));
           }
@@ -104,6 +105,13 @@ export class IngredientsList extends HTMLElement {
         default:
           return;
       }
+    }
+
+    function onDragStart(event: any) {
+      const target = event.target;
+      const key = target.getAttribute('data-key');
+      event.dataTransfer.setData('key', key);
+      event.dataTransfer.setData('value', 'INGREDIENT');
     }
 
     /** ================= Model =================
