@@ -133,9 +133,9 @@ export class FormNewRecipe extends HTMLElement {
      */
 
     const formNewRecipe: any = document.getElementById('form_new_recipe');
-    formNewRecipe.addEventListener('click', onSubmitForm, false);
+    this.addEventListener('click', onAction, false);
 
-    function onSubmitForm(event: Event | any) {
+    function onAction(event: Event | any) {
       event.preventDefault();
       const target: Element = event.target;
       const key: string | null = target.getAttribute('data-btn-key');
@@ -156,23 +156,6 @@ export class FormNewRecipe extends HTMLElement {
           store.dispatch(clearForm());
           break;
 
-        default:
-          break;
-      }
-    }
-
-    // TODO preListIngredients - это можно декомпозировать
-    const preListIngredients: any = document.getElementById(
-      'pre_list_ingredients',
-    );
-    preListIngredients.addEventListener('click', onClickToList, false);
-
-    function onClickToList(event: Event | any) {
-      const target: Element = event.target;
-      const key: string | null = target.getAttribute('data-btn-key');
-      const btnValue: string | null = target.getAttribute('data-btn-value');
-
-      switch (key) {
         case 'FORM_NEW_RECIPE__INGREDIENT_PLUS':
           store.dispatch(ingredientPlus(btnValue));
           break;

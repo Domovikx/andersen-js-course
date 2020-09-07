@@ -25,9 +25,9 @@ export class IngredientsList extends HTMLElement {
       for (let key in ingredientsList) {
         itemTemplates.push(
           html`
-            <li data-id=${key} draggable="true">
-              <p>${key} : ${ingredientsList[key]}</p>
-              <div class="btn-group">
+            <li data-id=${key} draggable="true" class="list-group-item">
+              ${key} : ${ingredientsList[key]}
+              <span class="btn-group">
                 <button
                   class="btn btn-lg material-icons"
                   data-btn-value="plus"
@@ -49,7 +49,7 @@ export class IngredientsList extends HTMLElement {
                 >
                   delete_sweep
                 </button>
-              </div>
+              </span>
             </li>
           `,
         );
@@ -58,7 +58,7 @@ export class IngredientsList extends HTMLElement {
       render(
         html`
           <h3>Ingredients list</h3>
-          <ul>
+          <ul class="list-group">
             ${itemTemplates}
           </ul>
         `,

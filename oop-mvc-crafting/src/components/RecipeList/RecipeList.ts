@@ -80,6 +80,7 @@ export class RecipeList extends HTMLElement {
      */
 
     this.addEventListener('click', onClick);
+    this.addEventListener('dragstart', onDragStart);
 
     function onClick(event: Event | any) {
       const target: Element = event.target;
@@ -108,6 +109,14 @@ export class RecipeList extends HTMLElement {
         default:
           return;
       }
+    }
+
+    function onDragStart(event: any) {
+      // console.log('onDragStart 1 :>> ', event);
+      const target = event.target;
+      const key = target.getAttribute('data-btn-key');
+      event.dataTransfer.setData('key', key);
+      event.dataTransfer.setData('value', 'RECIPE');
     }
   }
 }

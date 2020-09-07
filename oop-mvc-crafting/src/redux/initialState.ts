@@ -21,6 +21,12 @@ const initialState = {
   },
 
   formNewRecipe: {},
+
+  craftingTable: {
+    recipeName: 'Push the recipe right here !',
+    recipeList: {},
+    countCrafting: 0,
+  },
 };
 
 export default initialState;
