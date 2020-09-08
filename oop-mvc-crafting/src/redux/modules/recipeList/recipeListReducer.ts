@@ -1,8 +1,8 @@
-import initialState from '../../initialState';
 import { RECIPE_LIST__ADD, RECIPE_LIST__REMOVE } from './recipeListTypes';
+import { stateHandler, GET_STATE } from '../../stateHandler';
 
 export default function recipeListReducer(
-  state: any = initialState.recipeList,
+  state: any = stateHandler(GET_STATE).recipeList,
   { type, payload }: any,
 ) {
   switch (type) {

@@ -7,8 +7,10 @@ import {
   CRAFTING_TABLE__INIT_RECIPE_LIST,
 } from './craftingTableTypes';
 
+import { GET_STATE, stateHandler } from '../../stateHandler';
+
 export default function craftingTableReducer(
-  state: any = initialState.craftingTable,
+  state: any = stateHandler(GET_STATE).craftingTable,
   { type, payload }: any,
 ) {
   switch (type) {

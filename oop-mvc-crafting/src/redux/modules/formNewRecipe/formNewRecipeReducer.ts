@@ -1,4 +1,3 @@
-import initialState from '../../initialState';
 import {
   FORM_NEW_RECIPE__ADD_INGREDIENT,
   FORM_NEW_RECIPE__INGREDIENT_REMOVE,
@@ -7,8 +6,10 @@ import {
   FORM_NEW_RECIPE__CLEAR_FORM,
 } from './formNewRecipeTypes';
 
+import { stateHandler, GET_STATE } from '../../stateHandler';
+
 export default function formNewRecipeReducer(
-  state: any = initialState.formNewRecipe,
+  state: any = stateHandler(GET_STATE).formNewRecipe,
   { type, payload }: any,
 ) {
   switch (type) {

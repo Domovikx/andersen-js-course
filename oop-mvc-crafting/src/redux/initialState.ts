@@ -27,6 +27,8 @@ const initialState = {
     recipeList: {},
     countCrafting: 0,
   },
+
+  readyList: {},
 };
 
 export default initialState;

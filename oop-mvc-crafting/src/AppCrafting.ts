@@ -10,12 +10,22 @@ import ReadyList from './components/ReadyList';
 
 import { render, html } from 'lit-html';
 
+import store from './redux/helpers/store';
+import {
+  stateHandler,
+  SAVE_STATE_TO_LOCAL_STORAGE,
+} from './redux/stateHandler';
+
 export default class AppCrafting extends HTMLElement {
   constructor() {
     super();
   }
 
   connectedCallback() {
+    store.subscribe(() => {
+      stateHandler(SAVE_STATE_TO_LOCAL_STORAGE);
+    });
+
     customElements.define('ingredients-list', IngredientsList);
     customElements.define('form-new-ingredient', FormNewIngredient);
 

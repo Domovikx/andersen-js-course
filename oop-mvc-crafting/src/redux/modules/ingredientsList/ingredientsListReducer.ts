@@ -5,10 +5,10 @@ import {
   INGREDIENT_LIST__MINUS,
 } from './ingredientsListTypes';
 
-import initialState from '../../initialState';
+import { stateHandler, GET_STATE } from '../../stateHandler';
 
 export default function ingredientsListReducer(
-  state: any = initialState.ingredientsList,
+  state: any = stateHandler(GET_STATE).ingredientsList,
   { type, payload }: any,
 ) {
   switch (type) {

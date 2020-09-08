@@ -26,7 +26,7 @@ export class IngredientsList extends HTMLElement {
         itemTemplates.push(
           html`
             <li data-key=${key} draggable="true" class="list-group-item">
-              ${key} : ${ingredientsList[key]}
+              <span class="content-text">${key} : ${ingredientsList[key]}</span>
               <span class="btn-group">
                 <button
                   class="btn btn-lg material-icons"
