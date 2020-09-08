@@ -35,9 +35,6 @@ export default function craftingTableReducer(
       }
       return { ...state };
 
-    case CRAFTING_TABLE__START_CRAFTING:
-      return { ...state };
-
     case CRAFTING_TABLE__CLEAR_FORM:
       return initialState.craftingTable;
 

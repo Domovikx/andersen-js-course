@@ -9,6 +9,12 @@ import {
   clearForm,
   addIngredient,
 } from '../../redux/modules/craftingTable/craftingTableAction';
+import { readyListAdd } from '../../redux/modules/readyList/readyListAction';
+import {
+  ingredientListUpdate,
+  REMOVE_ITEMS,
+} from '../../redux/modules/ingredientsList/ingredientsListAction';
+import initialState from '../../redux/initialState';
 
 export class CraftingTable extends HTMLElement {
   constructor() {
@@ -37,7 +43,7 @@ export class CraftingTable extends HTMLElement {
               <button
                 class="btn btn-outline-secondary"
                 type="button"
-                data-btn-key="RECIPE_LIST__ADD"
+                data-btn-key="READY_LIST__ADD"
               >
                 Craft
               </button>
@@ -126,12 +132,20 @@ export class CraftingTable extends HTMLElement {
     }
 
     function startAction(key: string, value?: any) {
+      let ingredientsList: any;
+      let state: any;
+      let recipeList: any;
+      let recipeName: any;
+      let initRecipeListData: any;
+      let rootRecipeList: any;
+      let stock: any;
+
       switch (key) {
         case 'CRAFTING_TABLE__ADD_RECIPE':
           store.dispatch(addRecipe(value));
-          const state: any = store.getState();
-          const recipeList = state.recipeList[value];
-          const initRecipeListData: any = {};
+          state = store.getState();
+          recipeList = state.recipeList[value];
+          initRecipeListData = {};
           Object.entries(recipeList).forEach(([key, val]: any) => {
             initRecipeListData[key] = {
               exists: 0,
@@ -147,8 +161,38 @@ export class CraftingTable extends HTMLElement {
           return;
 
         case 'FORM_NEW_RECIPE__INGREDIENT_PLUS':
-          const ingredientsList: any = store.getState().ingredientsList;
+          ingredientsList = store.getState().ingredientsList;
           store.dispatch(addIngredient(value, ingredientsList));
+          return;
+
+        case 'READY_LIST__ADD':
+          state = store.getState();
+          recipeName = state.craftingTable.recipeName;
+          recipeList = state.craftingTable.recipeList;
+          rootRecipeList = state.recipeList[recipeName];
+          stock = state.ingredientsList;
+
+          if (recipeName === initialState.craftingTable.recipeName) {
+            return alert(`Нужно добавить рецепт, перетяните его на стол`);
+          }
+
+          const isAlert = Object.entries(recipeList).some(
+            ([key, { exists, required }]: any) => {
+              const inStock = stock[key];
+              if (inStock < exists) {
+                alert(`${key} - недостаточно на складе. Добавьте склад.`);
+                return true;
+              }
+              if (exists < required) {
+                alert(`${key} - недостаточно на столе. Добавьте еще.`);
+                return true;
+              }
+            },
+          );
+          if (isAlert) return;
+
+          store.dispatch(readyListAdd(recipeName, rootRecipeList));
+          store.dispatch(ingredientListUpdate(rootRecipeList, REMOVE_ITEMS));
           return;
 
         default:

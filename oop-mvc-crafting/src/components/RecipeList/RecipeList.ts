@@ -2,7 +2,11 @@ import store from '../../redux/helpers/store';
 import { html, render } from 'lit-html';
 
 import './recipeList.scss';
-import { recipeListRemove } from '../../redux/modules/recipeList/recipeListAction';
+import {
+  recipeListRemove,
+  recipeListPlus,
+  recipeListMinus,
+} from '../../redux/modules/recipeList/recipeListAction';
 
 export class RecipeList extends HTMLElement {
   constructor() {
@@ -24,17 +28,19 @@ export class RecipeList extends HTMLElement {
               <div
                 class="card-header"
                 draggable="true"
-                data-btn-value="collapseAction"
+                data-btn-value="COLLAPSE_ACTION"
                 data-btn-key=${key}
               >
-                ${key}
-                <button
-                  class="btn btn-lg material-icons"
-                  data-btn-value="removeAction"
-                  data-btn-key=${key}
-                >
-                  delete_sweep
-                </button>
+                <span class="content-text">${key}</span>
+                <span class="btn-group">
+                  <button
+                    class="btn btn-lg material-icons"
+                    data-btn-value="RECIPE_LIST__REMOVE"
+                    data-btn-key=${key}
+                  >
+                    delete_sweep
+                  </button>
+                </span>
               </div>
 
               <div
@@ -46,7 +52,30 @@ export class RecipeList extends HTMLElement {
                   ${Object.entries(recipeList[key]).map(
                     ([name, value]) =>
                       html`
-                        <li>${name} : ${value}</li>
+                        <li>
+                          <span class="content-text">
+                            ${name} : ${value}
+                          </span>
+                          <span class="btn-group">
+                            <button
+                              class="btn btn-lg material-icons"
+                              data-btn-value="RECIPE_LIST__PLUS"
+                              data-btn-key=${key}
+                              data-btn-item=${name}
+                            >
+                              add_box
+                            </button>
+
+                            <button
+                              class="btn btn-lg material-icons"
+                              data-btn-value="RECIPE_LIST__MINUS"
+                              data-btn-key=${key}
+                              data-btn-item=${name}
+                            >
+                              indeterminate_check_box
+                            </button>
+                          </span>
+                        </li>
                       `,
                   )}
                 </ul>
@@ -58,10 +87,12 @@ export class RecipeList extends HTMLElement {
 
       render(
         html`
-          <h3>Recipe List</h3>
-          <div>
-            ${itemTemplates}
-          </div>
+          ${Object.keys(recipeList).length !== 0
+            ? html`
+                <h3>Recipe List</h3>
+              `
+            : ''}
+          ${itemTemplates}
         `,
         this,
       );
@@ -87,11 +118,12 @@ export class RecipeList extends HTMLElement {
 
       const key = target.getAttribute('data-btn-key');
       const value = target.getAttribute('data-btn-value');
+      const item = target.getAttribute('data-btn-item');
 
       switch (value) {
-        case 'collapseAction':
+        case 'COLLAPSE_ACTION':
           const collapseElement: any = document.querySelector(
-            `[data-collapse="${key}"]`,
+            `recipe-list [data-collapse="${key}"]`,
           );
           if (collapseElement.classList.contains('show')) {
             collapseElement.classList.remove('show');
@@ -100,10 +132,18 @@ export class RecipeList extends HTMLElement {
           }
           return;
 
-        case 'removeAction':
+        case 'RECIPE_LIST__REMOVE':
           if (confirm(`Вы уверены, удалить "${key}" ?`)) {
             store.dispatch(recipeListRemove(key));
           }
+          return;
+
+        case 'RECIPE_LIST__PLUS':
+          store.dispatch(recipeListPlus(key, item));
+          return;
+
+        case 'RECIPE_LIST__MINUS':
+          store.dispatch(recipeListMinus(key, item));
           return;
 
         default:

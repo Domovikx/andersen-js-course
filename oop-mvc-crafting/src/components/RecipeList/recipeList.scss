@@ -47,4 +47,62 @@ recipe-list {
       color: peru;
     }
   }
+
+  .card-header {
+    .btn-group {
+      opacity: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: 0.5s;
+      width: 0px;
+    }
+
+    &:hover {
+      background-color: #cd853f33;
+
+      .btn-group {
+        width: min-content;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  .card-header {
+    .btn-group {
+      opacity: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: 0.5s;
+      width: 0px;
+    }
+
+    &:hover {
+      background-color: #cd853f33;
+
+      .btn-group {
+        width: min-content;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  li {
+    .btn-group {
+      opacity: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: 0.5s;
+      width: 0px;
+    }
+
+    &:hover {
+      .btn-group {
+        width: min-content;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
 }

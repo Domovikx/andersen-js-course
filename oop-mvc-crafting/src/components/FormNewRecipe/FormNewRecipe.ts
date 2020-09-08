@@ -33,7 +33,6 @@ export class FormNewRecipe extends HTMLElement {
           <form id="form_new_recipe">
             <div class="input-group mb-1">
               <select class="custom-select" name="select_ingredient">
-                <option selected>Select ingredient</option>
                 ${ingredientsKeys.map(
                   (key) =>
                     html`
@@ -140,16 +139,30 @@ export class FormNewRecipe extends HTMLElement {
       const target: Element = event.target;
       const key: string | null = target.getAttribute('data-btn-key');
       const btnValue: string | null = target.getAttribute('data-btn-value');
-
+      let recipeKey;
+      let recipeValue;
       switch (key) {
         case 'FORM_NEW_RECIPE__ADD_INGREDIENT':
-          let value = formNewRecipe.elements['select_ingredient'].value;
-          store.dispatch(addIngredient(value));
+          recipeKey = formNewRecipe.elements['select_ingredient'].value;
+          recipeValue;
+          store.dispatch(addIngredient(recipeKey));
           break;
 
         case 'RECIPE_LIST__ADD':
-          value = formNewRecipe.elements['recipe_name'].value;
-          store.dispatch(recipeListAdd(value));
+          recipeKey = formNewRecipe.elements['recipe_name'].value;
+          if (!recipeKey) return alert('нужно добавить имя');
+          recipeValue = store.getState().formNewRecipe;
+          if (Object.keys(recipeValue).length === 0)
+            return alert('нужно добавить ингридиенты');
+
+          if (store.getState().recipeList[recipeKey]) {
+            if (confirm(`${recipeKey} - уже существует, перезаписать ?`)) {
+              store.dispatch(recipeListAdd(recipeKey, recipeValue));
+            }
+            return;
+          }
+
+          store.dispatch(recipeListAdd(recipeKey, recipeValue));
           break;
 
         case 'FORM_NEW_RECIPE__CLEAR_FORM':

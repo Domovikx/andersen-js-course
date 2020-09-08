@@ -2,6 +2,11 @@ import store from '../../redux/helpers/store';
 import { html, render } from 'lit-html';
 
 import './readyList.scss';
+import { readyListRemove } from '../../redux/modules/readyList/readyListAction';
+import {
+  ingredientListUpdate,
+  ADD_ITEMS,
+} from '../../redux/modules/ingredientsList/ingredientsListAction';
 
 export class ReadyList extends HTMLElement {
   constructor() {
@@ -12,27 +17,77 @@ export class ReadyList extends HTMLElement {
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
-    const recipeList = store.getState().recipeList;
+    const state = store.getState();
 
-    const renderView = () => {
+    const renderView = (readyList: any) => {
       render(
         html`
-          <h3>Recipe List</h3>
+          ${Object.keys(readyList).length !== 0
+            ? html`
+                <h3>Ready List</h3>
+              `
+            : ''}
+          ${Object.entries(readyList).map(
+            ([key, { count, recipeList }]: any) => {
+              return html`
+                <div class="card">
+                  <div
+                    class="card-header"
+                    draggable="true"
+                    data-btn-value="COLLAPSE_ACTION"
+                    data-btn-key=${key}
+                  >
+                    <span class="content-text">${key} : ${count}</span>
+                    <span class="btn-group">
+                      <button
+                        class="btn btn-lg material-icons"
+                        data-btn-value="READY_LIST__REMOVE"
+                        data-btn-key=${key}
+                      >
+                        delete_sweep
+                      </button>
 
-          <ul class="list-group" id="pre_list_ingredients">
-            123
-          </ul>
+                      <button
+                        class="btn btn-lg material-icons"
+                        data-btn-value="READY_LIST__DISASSEMBLE"
+                        data-btn-key=${key}
+                      >
+                        gavel
+                      </button>
+                    </span>
+                  </div>
+
+                  <div>
+                    <div
+                      class="collapse card-body"
+                      aria-labelledby="headingOne"
+                      data-collapse=${key}
+                    >
+                      <ul>
+                        ${Object.entries(recipeList).map(
+                          ([name, value]) =>
+                            html`
+                              <li>${name} : ${value}</li>
+                            `,
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              `;
+            },
+          )}
         `,
         this,
       );
     };
 
-    renderView();
+    renderView(state.readyList);
 
     // Подписывапемся на обновление стейта
     store.subscribe(() => {
       const state = store.getState();
-      renderView();
+      renderView(state.readyList);
     });
 
     /** ================= Controller =================
@@ -40,18 +95,20 @@ export class ReadyList extends HTMLElement {
      */
 
     this.addEventListener('click', onClick);
-    this.addEventListener('dragstart', onDragStart);
 
     function onClick(event: Event | any) {
       const target: Element = event.target;
 
-      const key = target.getAttribute('data-btn-key');
+      const key: any = target.getAttribute('data-btn-key');
       const value = target.getAttribute('data-btn-value');
 
+      let state;
+      let recipeList;
+
       switch (value) {
-        case 'collapseAction':
+        case 'COLLAPSE_ACTION':
           const collapseElement: any = document.querySelector(
-            `[data-collapse="${key}"]`,
+            `ready-list [data-collapse="${key}"]`,
           );
           if (collapseElement.classList.contains('show')) {
             collapseElement.classList.remove('show');
@@ -60,22 +117,20 @@ export class ReadyList extends HTMLElement {
           }
           return;
 
-        case 'removeAction':
-          if (confirm(`Вы уверены, удалить "${key}" ?`)) {
-            store.dispatch(recipeListRemove(key));
-          }
+        case 'READY_LIST__REMOVE':
+          store.dispatch(readyListRemove(key));
+          return;
+
+        case 'READY_LIST__DISASSEMBLE':
+          state = store.getState();
+          recipeList = state.readyList[key].recipeList;
+          store.dispatch(ingredientListUpdate(recipeList, ADD_ITEMS));
+          store.dispatch(readyListRemove(key));
           return;
 
         default:
           return;
       }
-    }
-
-    function onDragStart(event: any) {
-      const target = event.target;
-      const key = target.getAttribute('data-btn-key');
-      event.dataTransfer.setData('key', key);
-      event.dataTransfer.setData('value', 'RECIPE');
     }
   }
 }

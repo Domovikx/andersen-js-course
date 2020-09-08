@@ -1,5 +1,9 @@
-import { RECIPE_LIST__REMOVE, RECIPE_LIST__ADD } from './recipeListTypes';
-import store from '../../helpers/store';
+import {
+  RECIPE_LIST__REMOVE,
+  RECIPE_LIST__ADD,
+  RECIPE_LIST__PLUS,
+  RECIPE_LIST__MINUS,
+} from './recipeListTypes';
 
 export function recipeListRemove(key: string | null) {
   return {
@@ -8,10 +12,25 @@ export function recipeListRemove(key: string | null) {
   };
 }
 
-export function recipeListAdd(key: string | null) {
-  const value = store.getState().formNewRecipe;
+export function recipeListAdd(key: string | null, value: any) {
   return {
     type: RECIPE_LIST__ADD,
+    payload: { key, value },
+  };
+}
+
+export function recipeListPlus(key: string | null, value: any) {
+  console.log('object :>> ', key, value);
+  return {
+    type: RECIPE_LIST__PLUS,
+    payload: { key, value },
+  };
+}
+
+export function recipeListMinus(key: string | null, value: any) {
+  console.log('object :>> ', key, value);
+  return {
+    type: RECIPE_LIST__MINUS,
     payload: { key, value },
   };
 }

@@ -1,7 +1,6 @@
 import {
   CRAFTING_TABLE__ADD_RECIPE,
   CRAFTING_TABLE__ADD_INGREDIENT,
-  CRAFTING_TABLE__START_CRAFTING,
   CRAFTING_TABLE__CLEAR_FORM,
   CRAFTING_TABLE__INIT_RECIPE_LIST,
 } from './craftingTableTypes';
@@ -24,12 +23,6 @@ export function addIngredient(key: string | null, ingredientsList: any) {
   return {
     type: CRAFTING_TABLE__ADD_INGREDIENT,
     payload: { key, ingredientsList },
-  };
-}
-
-export function startCrafting() {
-  return {
-    type: CRAFTING_TABLE__START_CRAFTING,
   };
 }
 

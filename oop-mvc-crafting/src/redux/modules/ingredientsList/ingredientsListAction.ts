@@ -2,6 +2,7 @@ import {
   INGREDIENT_LIST__REMOVE,
   INGREDIENT_LIST__PLUS,
   INGREDIENT_LIST__MINUS,
+  INGREDIENT_LIST__UPDATE,
 } from './ingredientsListTypes';
 
 export function ingredientListPlus(key: string | null) {
@@ -24,3 +25,13 @@ export function ingredientListRemove(key: string | null) {
     payload: { key },
   };
 }
+
+export function ingredientListUpdate(ingredientsList: any, action: string) {
+  return {
+    type: INGREDIENT_LIST__UPDATE,
+    payload: { ingredientsList, action },
+  };
+}
+
+export const REMOVE_ITEMS = 'REMOVE_ITEMS';
+export const ADD_ITEMS = 'ADD_ITEMS';
