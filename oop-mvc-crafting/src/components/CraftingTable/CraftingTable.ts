@@ -14,7 +14,6 @@ import {
   ingredientListUpdate,
   REMOVE_ITEMS,
 } from '../../redux/modules/ingredientsList/ingredientsListAction';
-import initialState from '../../redux/initialState';
 
 export class CraftingTable extends HTMLElement {
   constructor() {
@@ -34,53 +33,62 @@ export class CraftingTable extends HTMLElement {
 
       render(
         html`
-          <h3>Crafting Table</h3>
-          <div class="input-group">
-            <span class="card" data-place-key="RECIPE_INPUT">
-              ${craftingTable.recipeName}
-            </span>
-            <span class="input-group-append">
-              <button
-                class="btn btn-outline-secondary"
-                type="button"
-                data-btn-key="READY_LIST__ADD"
-              >
-                Craft
-              </button>
+          <h3 data-btn-key="COLLAPSE_ACTION">
+            Crafting Table
+          </h3>
 
-              <button
-                class="btn btn-outline-secondary material-icons"
-                data-btn-key="CRAFTING_TABLE__CLEAR_FORM"
-              >
-                delete_sweep
-              </button>
-            </span>
+          <div class="collapse show">
+            <div class="input-group">
+              <span class="card recipe-field" data-place-key="RECIPE_INPUT">
+                ${craftingTable.recipeName}
+              </span>
+
+              <span class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  data-btn-key="READY_LIST__ADD"
+                >
+                  Craft
+                </button>
+
+                <button
+                  class="btn btn-outline-secondary material-icons"
+                  data-btn-key="CRAFTING_TABLE__CLEAR_FORM"
+                >
+                  delete_sweep
+                </button>
+              </span>
+            </div>
+
+            <ul class="list-group">
+              ${Object.entries(recipeList).map(
+                ([key, { exists, required }]: any) =>
+                  html`
+                    <li
+                      class="list-group-item ingredient-field"
+                      data-place-key=${key}
+                    >
+                      ${key} :
+                      ${exists <= ingredientsList[key]
+                        ? exists
+                        : ingredientsList[key]}
+                      из ${required} (${ingredientsList[key]})
+
+                      <span class="btn-group">
+                        <button
+                          class="btn btn-lg material-icons"
+                          data-btn-value=${key}
+                          data-btn-key="FORM_NEW_RECIPE__INGREDIENT_PLUS"
+                        >
+                          add_box
+                        </button>
+                      </span>
+                    </li>
+                  `,
+              )}
+            </ul>
           </div>
-
-          <ul class="list-group">
-            ${Object.entries(recipeList).map(
-              ([key, { exists, required }]: any) =>
-                html`
-                  <li class="list-group-item" data-place-key=${key}>
-                    ${key} :
-                    ${exists <= ingredientsList[key]
-                      ? exists
-                      : ingredientsList[key]}
-                    из ${required} (${ingredientsList[key]})
-
-                    <span class="btn-group">
-                      <button
-                        class="btn btn-lg material-icons"
-                        data-btn-value=${key}
-                        data-btn-key="FORM_NEW_RECIPE__INGREDIENT_PLUS"
-                      >
-                        add_box
-                      </button>
-                    </span>
-                  </li>
-                `,
-            )}
-          </ul>
         `,
         this,
       );
@@ -113,11 +121,6 @@ export class CraftingTable extends HTMLElement {
 
     function onDragOver(event: any) {
       event.preventDefault();
-      // TODO: Сделать подсветку
-      // const target = event.target;
-      // const recipePlace = document.querySelector(
-      //   '.crafting-table-recipe-place',
-      // );
     }
 
     function onDrop(event: any) {
@@ -141,6 +144,17 @@ export class CraftingTable extends HTMLElement {
       let stock: any;
 
       switch (key) {
+        case 'COLLAPSE_ACTION':
+          const collapseElement: any = document.querySelector(
+            `crafting-table .collapse`,
+          );
+          if (collapseElement.classList.contains('show')) {
+            collapseElement.classList.remove('show');
+          } else {
+            collapseElement.classList.add('show');
+          }
+          return;
+
         case 'CRAFTING_TABLE__ADD_RECIPE':
           store.dispatch(addRecipe(value));
           state = store.getState();
@@ -172,7 +186,7 @@ export class CraftingTable extends HTMLElement {
           rootRecipeList = state.recipeList[recipeName];
           stock = state.ingredientsList;
 
-          if (recipeName === initialState.craftingTable.recipeName) {
+          if (recipeName === '') {
             return alert(`Нужно добавить рецепт, перетяните его на стол`);
           }
 

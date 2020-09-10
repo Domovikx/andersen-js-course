@@ -6,6 +6,14 @@ ingredients-list {
   h3 {
     text-align: center;
     padding: 10px 0;
+
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: antiquewhite;
+    }
   }
 
   .list-group-item {
@@ -13,6 +21,7 @@ ingredients-list {
     padding: 12px 20px;
     transition: 0.5s;
     border-radius: 6px;
+    cursor: move;
 
     .btn {
       opacity: 0.2;
@@ -30,7 +39,7 @@ ingredients-list {
 
       &:active {
         transition: 0s;
-        color: peru;
+        color: antiquewhite;
       }
     }
 
@@ -43,7 +52,7 @@ ingredients-list {
     }
 
     &:hover {
-      background-color: #cd853f33;
+      background-color: antiquewhite;
 
       .btn-group {
         width: min-content;

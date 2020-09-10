@@ -1,3 +1,5 @@
+import './appCrafting.scss';
+
 import IngredientsList from './components/IngredientsList';
 import FormNewIngredient from './components/FormNewIngredient';
 
@@ -38,15 +40,16 @@ export default class AppCrafting extends HTMLElement {
 
     render(
       html`
-        <ingredients-list></ingredients-list>
-        <form-new-ingredient></form-new-ingredient>
-
-        <recipe-list></recipe-list>
-        <form-new-recipe></form-new-recipe>
-
-        <crafting-table></crafting-table>
-
-        <ready-list></ready-list>
+        <div class="overflow-auto direction-rtl">
+          <recipe-list class="direction-ltr"></recipe-list>
+          <ingredients-list class="direction-ltr"></ingredients-list>
+          <ready-list class="direction-ltr"></ready-list>
+        </div>
+        <div class="overflow-auto">
+          <form-new-ingredient></form-new-ingredient>
+          <form-new-recipe></form-new-recipe>
+          <crafting-table></crafting-table>
+        </div>
       `,
       this,
     );

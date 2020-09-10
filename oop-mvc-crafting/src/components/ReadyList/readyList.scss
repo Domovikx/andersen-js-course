@@ -8,7 +8,7 @@ ready-list {
     transition: 0.5s;
 
     &:hover {
-      background-color: #cd853f33;
+      background-color: antiquewhite;
     }
   }
 
@@ -22,6 +22,14 @@ ready-list {
   h3 {
     text-align: center;
     padding: 10px 0;
+
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: antiquewhite;
+    }
   }
 
   li {
@@ -44,7 +52,7 @@ ready-list {
 
     &:active {
       transition: 0s;
-      color: peru;
+      color: antiquewhite;
     }
   }
 
@@ -58,7 +66,7 @@ ready-list {
     }
 
     &:hover {
-      background-color: #cd853f33;
+      background-color: antiquewhite;
 
       .btn-group {
         width: min-content;

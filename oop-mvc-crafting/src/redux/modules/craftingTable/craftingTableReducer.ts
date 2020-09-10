@@ -1,8 +1,6 @@
-import initialState from '../../initialState';
 import {
   CRAFTING_TABLE__ADD_RECIPE,
   CRAFTING_TABLE__ADD_INGREDIENT,
-  CRAFTING_TABLE__START_CRAFTING,
   CRAFTING_TABLE__CLEAR_FORM,
   CRAFTING_TABLE__INIT_RECIPE_LIST,
 } from './craftingTableTypes';
@@ -36,7 +34,11 @@ export default function craftingTableReducer(
       return { ...state };
 
     case CRAFTING_TABLE__CLEAR_FORM:
-      return initialState.craftingTable;
+      return {
+        recipeName: '',
+        recipeList: {},
+        countCrafting: 0,
+      };
 
     default:
       return state;

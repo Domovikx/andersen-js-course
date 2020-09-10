@@ -20,7 +20,6 @@ export function recipeListAdd(key: string | null, value: any) {
 }
 
 export function recipeListPlus(key: string | null, value: any) {
-  console.log('object :>> ', key, value);
   return {
     type: RECIPE_LIST__PLUS,
     payload: { key, value },
@@ -28,7 +27,6 @@ export function recipeListPlus(key: string | null, value: any) {
 }
 
 export function recipeListMinus(key: string | null, value: any) {
-  console.log('object :>> ', key, value);
   return {
     type: RECIPE_LIST__MINUS,
     payload: { key, value },

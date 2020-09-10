@@ -29,90 +29,95 @@ export class FormNewRecipe extends HTMLElement {
 
       render(
         html`
-          <h3>Adding a new recipe</h3>
-          <form id="form_new_recipe">
-            <div class="input-group mb-1">
-              <select class="custom-select" name="select_ingredient">
-                ${ingredientsKeys.map(
-                  (key) =>
-                    html`
-                      <option value=${key}> ${key}</option>
-                    `,
-                )}
-              </select>
+          <h3 data-btn-key="COLLAPSE_ACTION">
+            Adding a new recipe
+          </h3>
 
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-secondary"
-                  type="button"
-                  data-btn-key="FORM_NEW_RECIPE__ADD_INGREDIENT"
-                >
-                  Add
-                </button>
+          <div class="collapse show">
+            <form id="form_new_recipe">
+              <div class="input-group mb-1">
+                <select class="custom-select" name="select_ingredient">
+                  ${ingredientsKeys.map(
+                    (key) =>
+                      html`
+                        <option value=${key}> ${key}</option>
+                      `,
+                  )}
+                </select>
+
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    data-btn-key="FORM_NEW_RECIPE__ADD_INGREDIENT"
+                  >
+                    Add
+                  </button>
+                </div>
               </div>
-            </div>
 
-            <div class="input-group mb-1">
-              <input
-                name="recipe_name"
-                type="Name"
-                class="form-control"
-                placeholder="Add new recipe name"
-                aria-label="Form to new recipe"
-              />
-              <div class="input-group-append">
-                <button
-                  class="btn btn-outline-secondary"
-                  type="button"
-                  data-btn-key="RECIPE_LIST__ADD"
-                >
-                  Add recipe
-                </button>
-                <button
-                  class="btn btn-outline-secondary material-icons"
-                  data-btn-key="FORM_NEW_RECIPE__CLEAR_FORM"
-                >
-                  delete_sweep
-                </button>
+              <div class="input-group mb-1">
+                <input
+                  name="recipe_name"
+                  type="Name"
+                  class="form-control recipe-name"
+                  placeholder="Add new recipe name"
+                  aria-label="Form to new recipe"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    data-btn-key="RECIPE_LIST__ADD"
+                  >
+                    Add recipe
+                  </button>
+                  <button
+                    class="btn btn-outline-secondary material-icons"
+                    data-btn-key="FORM_NEW_RECIPE__CLEAR_FORM"
+                  >
+                    delete_sweep
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
 
-          <!-- TODO: тут можно делать декомпозицию -->
-          <ul class="list-group" id="pre_list_ingredients">
-            ${Object.entries(formNewRecipeState).map(
-              ([key, val]) =>
-                html`
-                  <li class="list-group-item">
-                    ${key} : ${val}
+            <!-- TODO: тут можно делать декомпозицию -->
+            <ul class="list-group" id="pre_list_ingredients">
+              ${Object.entries(formNewRecipeState).map(
+                ([key, val]) =>
+                  html`
+                    <li class="list-group-item">
+                      ${key} : ${val}
 
-                    <span class="btn-group">
-                      <button
-                        class="btn btn-lg material-icons"
-                        data-btn-value=${key}
-                        data-btn-key="FORM_NEW_RECIPE__INGREDIENT_PLUS"
-                      >
-                        add_box
-                      </button>
-                      <button
-                        class="btn btn-lg material-icons"
-                        data-btn-value=${key}
-                        data-btn-key="FORM_NEW_RECIPE__INGREDIENT_MINUS"
-                      >
-                        indeterminate_check_box
-                      </button>
-                      <button
-                        class="btn btn-lg material-icons"
-                        data-btn-value=${key}
-                        data-btn-key="FORM_NEW_RECIPE__INGREDIENT_REMOVE"
-                      >
-                        delete_sweep
-                      </button>
-                    </span>
-                  </li>
-                `,
-            )}
-          </ul>
+                      <span class="btn-group">
+                        <button
+                          class="btn btn-lg material-icons"
+                          data-btn-value=${key}
+                          data-btn-key="FORM_NEW_RECIPE__INGREDIENT_PLUS"
+                        >
+                          add_box
+                        </button>
+                        <button
+                          class="btn btn-lg material-icons"
+                          data-btn-value=${key}
+                          data-btn-key="FORM_NEW_RECIPE__INGREDIENT_MINUS"
+                        >
+                          indeterminate_check_box
+                        </button>
+                        <button
+                          class="btn btn-lg material-icons"
+                          data-btn-value=${key}
+                          data-btn-key="FORM_NEW_RECIPE__INGREDIENT_REMOVE"
+                        >
+                          delete_sweep
+                        </button>
+                      </span>
+                    </li>
+                  `,
+              )}
+            </ul>
+          </div>
         `,
         this,
       );
@@ -139,14 +144,27 @@ export class FormNewRecipe extends HTMLElement {
       const target: Element = event.target;
       const key: string | null = target.getAttribute('data-btn-key');
       const btnValue: string | null = target.getAttribute('data-btn-value');
+
       let recipeKey;
       let recipeValue;
+
       switch (key) {
+        case 'COLLAPSE_ACTION':
+          const collapseElement: any = document.querySelector(
+            `form-new-recipe .collapse`,
+          );
+          if (collapseElement.classList.contains('show')) {
+            collapseElement.classList.remove('show');
+          } else {
+            collapseElement.classList.add('show');
+          }
+          return;
+
         case 'FORM_NEW_RECIPE__ADD_INGREDIENT':
           recipeKey = formNewRecipe.elements['select_ingredient'].value;
           recipeValue;
           store.dispatch(addIngredient(recipeKey));
-          break;
+          return;
 
         case 'RECIPE_LIST__ADD':
           recipeKey = formNewRecipe.elements['recipe_name'].value;
@@ -163,26 +181,30 @@ export class FormNewRecipe extends HTMLElement {
           }
 
           store.dispatch(recipeListAdd(recipeKey, recipeValue));
-          break;
+          return;
 
         case 'FORM_NEW_RECIPE__CLEAR_FORM':
+          const recipeName: any = document.querySelector(
+            'form-new-recipe .recipe-name',
+          );
+          recipeName.value = '';
           store.dispatch(clearForm());
-          break;
+          return;
 
         case 'FORM_NEW_RECIPE__INGREDIENT_PLUS':
           store.dispatch(ingredientPlus(btnValue));
-          break;
+          return;
 
         case 'FORM_NEW_RECIPE__INGREDIENT_MINUS':
           store.dispatch(ingredientMinus(btnValue));
-          break;
+          return;
 
         case 'FORM_NEW_RECIPE__INGREDIENT_REMOVE':
           store.dispatch(ingredientRemove(btnValue));
-          break;
+          return;
 
         default:
-          break;
+          return;
       }
     }
   }

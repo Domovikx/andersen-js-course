@@ -57,10 +57,21 @@ export class IngredientsList extends HTMLElement {
 
       render(
         html`
-          <h3>Ingredients list</h3>
-          <ul class="list-group">
-            ${itemTemplates}
-          </ul>
+          ${Object.keys(ingredientsList).length !== 0
+            ? html`
+                <h3
+                  data-btn-value="COLLAPSE_ACTION"
+                  data-btn-key="COLLAPSE_BLOCK"
+                >
+                  Ingredients list
+                </h3>
+              `
+            : ''}
+          <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
+            <ul class="list-group overflow-auto">
+              ${itemTemplates}
+            </ul>
+          </div>
         `,
         this,
       );
@@ -80,6 +91,7 @@ export class IngredientsList extends HTMLElement {
 
     this.addEventListener('click', onClick);
     this.addEventListener('dragstart', onDragStart);
+    this.addEventListener('dragend', onDragEnd);
 
     function onClick(event: Event | any) {
       const target: Element = event.target;
@@ -88,6 +100,17 @@ export class IngredientsList extends HTMLElement {
       const value = target.getAttribute('data-btn-value');
 
       switch (value) {
+        case 'COLLAPSE_ACTION':
+          const collapseElement: any = document.querySelector(
+            `ingredients-list [data-collapse="${key}"]`,
+          );
+          if (collapseElement.classList.contains('show')) {
+            collapseElement.classList.remove('show');
+          } else {
+            collapseElement.classList.add('show');
+          }
+          return;
+
         case 'INGREDIENT_LIST__PLUS':
           store.dispatch(ingredientListPlus(key));
           return;
@@ -110,14 +133,25 @@ export class IngredientsList extends HTMLElement {
     function onDragStart(event: any) {
       const target = event.target;
       const key = target.getAttribute('data-key');
-      event.dataTransfer.setData('key', key);
-      event.dataTransfer.setData('value', 'INGREDIENT');
+      const dt = event.dataTransfer;
+      dt.setData('key', key);
+      dt.setData('value', 'INGREDIENT');
+
+      const ingredientField: any =
+        document.querySelector(`crafting-table [data-place-key=${key}]`) ||
+        null;
+      // TODO: Узнать как валидировать document.querySelector при undefined
+      // точнее при не нахождении элемента
+      if (ingredientField) {
+        ingredientField.classList.add('backlight');
+      }
     }
 
-    /** ================= Model =================
-     * Управление состоянием и стейтом
-     * даже и не знаю что сюда в моем случае написать,
-     * может быть имеет смысл сюда вынести switch (value) ...
-     */
+    function onDragEnd() {
+      const ingredientField: any = document.querySelector(
+        `crafting-table .backlight`,
+      );
+      ingredientField.classList.remove('backlight');
+    }
   }
 }

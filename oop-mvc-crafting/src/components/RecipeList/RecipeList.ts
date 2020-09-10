@@ -89,10 +89,18 @@ export class RecipeList extends HTMLElement {
         html`
           ${Object.keys(recipeList).length !== 0
             ? html`
-                <h3>Recipe List</h3>
+                <h3
+                  data-btn-value="COLLAPSE_ACTION"
+                  data-btn-key="COLLAPSE_BLOCK"
+                >
+                  Recipe List
+                </h3>
               `
             : ''}
-          ${itemTemplates}
+
+          <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
+            ${itemTemplates}
+          </div>
         `,
         this,
       );
@@ -112,6 +120,7 @@ export class RecipeList extends HTMLElement {
 
     this.addEventListener('click', onClick);
     this.addEventListener('dragstart', onDragStart);
+    this.addEventListener('dragend', onDragEnd);
 
     function onClick(event: Event | any) {
       const target: Element = event.target;
@@ -122,6 +131,8 @@ export class RecipeList extends HTMLElement {
 
       switch (value) {
         case 'COLLAPSE_ACTION':
+          // TODO: Много повторений COLLAPSE_ACTION,
+          // можно вынести в отдельный хелпер
           const collapseElement: any = document.querySelector(
             `recipe-list [data-collapse="${key}"]`,
           );
@@ -156,6 +167,18 @@ export class RecipeList extends HTMLElement {
       const key = target.getAttribute('data-btn-key');
       event.dataTransfer.setData('key', key);
       event.dataTransfer.setData('value', 'RECIPE');
+
+      const recipeField: any = document.querySelector(
+        'crafting-table .recipe-field',
+      );
+      recipeField.classList.add('backlight');
+    }
+
+    function onDragEnd() {
+      const recipeField: any = document.querySelector(
+        'crafting-table .recipe-field',
+      );
+      recipeField.classList.remove('backlight');
     }
   }
 }

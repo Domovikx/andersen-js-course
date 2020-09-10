@@ -5,7 +5,15 @@ crafting-table {
 
   h3 {
     text-align: center;
-    padding: 12px 20px;
+    padding: 10px 0;
+
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: antiquewhite;
+    }
   }
 
   .card {
@@ -30,8 +38,27 @@ crafting-table {
 
       &:active {
         transition: 0s;
-        color: peru;
+        color: antiquewhite;
       }
     }
+
+    .btn-group {
+      opacity: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: 0.5s;
+      width: 0px;
+    }
+
+    &:hover {
+      .btn-group {
+        width: min-content;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+  .backlight {
+    background-color: antiquewhite;
   }
 }

@@ -3,12 +3,36 @@ form-new-recipe {
   padding: 6px;
 
   h3 {
-    padding: 10px 0;
     text-align: center;
+    padding: 10px 0;
+
+    cursor: pointer;
+    transition: 0.5s;
+    border-radius: 6px;
+
+    &:hover {
+      background-color: antiquewhite;
+    }
   }
 
   .list-group-item {
     padding: 0 20px;
+
+    .btn-group {
+      opacity: 0;
+      overflow: hidden;
+      visibility: hidden;
+      transition: 0.5s;
+      width: 0px;
+    }
+
+    &:hover {
+      .btn-group {
+        width: min-content;
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
 
   button.btn.btn-lg.material-icons {
@@ -27,7 +51,7 @@ form-new-recipe {
 
     &:active {
       transition: 0s;
-      color: peru;
+      color: antiquewhite;
     }
   }
 }

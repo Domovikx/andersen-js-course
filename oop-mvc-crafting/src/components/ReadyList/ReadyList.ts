@@ -24,59 +24,65 @@ export class ReadyList extends HTMLElement {
         html`
           ${Object.keys(readyList).length !== 0
             ? html`
-                <h3>Ready List</h3>
+                <h3
+                  data-btn-value="COLLAPSE_ACTION"
+                  data-btn-key="COLLAPSE_BLOCK"
+                >
+                  Ready List
+                </h3>
               `
             : ''}
-          ${Object.entries(readyList).map(
-            ([key, { count, recipeList }]: any) => {
-              return html`
-                <div class="card">
-                  <div
-                    class="card-header"
-                    draggable="true"
-                    data-btn-value="COLLAPSE_ACTION"
-                    data-btn-key=${key}
-                  >
-                    <span class="content-text">${key} : ${count}</span>
-                    <span class="btn-group">
-                      <button
-                        class="btn btn-lg material-icons"
-                        data-btn-value="READY_LIST__REMOVE"
-                        data-btn-key=${key}
-                      >
-                        delete_sweep
-                      </button>
-
-                      <button
-                        class="btn btn-lg material-icons"
-                        data-btn-value="READY_LIST__DISASSEMBLE"
-                        data-btn-key=${key}
-                      >
-                        gavel
-                      </button>
-                    </span>
-                  </div>
-
-                  <div>
+          <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
+            ${Object.entries(readyList).map(
+              ([key, { count, recipeList }]: any) => {
+                return html`
+                  <div class="card">
                     <div
-                      class="collapse card-body"
-                      aria-labelledby="headingOne"
-                      data-collapse=${key}
+                      class="card-header"
+                      data-btn-value="COLLAPSE_ACTION"
+                      data-btn-key=${key}
                     >
-                      <ul>
-                        ${Object.entries(recipeList).map(
-                          ([name, value]) =>
-                            html`
-                              <li>${name} : ${value}</li>
-                            `,
-                        )}
-                      </ul>
+                      <span class="content-text">${key} : ${count}</span>
+                      <span class="btn-group">
+                        <button
+                          class="btn btn-lg material-icons"
+                          data-btn-value="READY_LIST__REMOVE"
+                          data-btn-key=${key}
+                        >
+                          delete_sweep
+                        </button>
+
+                        <button
+                          class="btn btn-lg material-icons"
+                          data-btn-value="READY_LIST__DISASSEMBLE"
+                          data-btn-key=${key}
+                        >
+                          gavel
+                        </button>
+                      </span>
+                    </div>
+
+                    <div>
+                      <div
+                        class="collapse card-body"
+                        aria-labelledby="headingOne"
+                        data-collapse=${key}
+                      >
+                        <ul>
+                          ${Object.entries(recipeList).map(
+                            ([name, value]) =>
+                              html`
+                                <li>${name} : ${value}</li>
+                              `,
+                          )}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              `;
-            },
-          )}
+                `;
+              },
+            )}
+          </div>
         `,
         this,
       );
@@ -94,11 +100,10 @@ export class ReadyList extends HTMLElement {
      * Подписка на события и управление
      */
 
-    this.addEventListener('click', onClick);
+    this.addEventListener('click', onAction);
 
-    function onClick(event: Event | any) {
+    function onAction(event: Event | any) {
       const target: Element = event.target;
-
       const key: any = target.getAttribute('data-btn-key');
       const value = target.getAttribute('data-btn-value');
 
