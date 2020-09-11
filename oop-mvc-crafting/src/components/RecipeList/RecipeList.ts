@@ -1,5 +1,4 @@
 import store from '../../redux/helpers/store';
-import { html, render } from 'lit-html';
 
 import './recipeList.scss';
 import {
@@ -23,20 +22,20 @@ export class RecipeList extends HTMLElement {
       const itemTemplates = [];
       for (let key in recipeList) {
         itemTemplates.push(
-          html`
+          `
             <div class="card">
               <div
                 class="card-header"
                 draggable="true"
                 data-btn-value="COLLAPSE_ACTION"
-                data-btn-key=${key}
+                data-btn-key="${key}"
               >
                 <span class="content-text">${key}</span>
                 <span class="btn-group">
                   <button
                     class="btn btn-lg material-icons"
                     data-btn-value="RECIPE_LIST__REMOVE"
-                    data-btn-key=${key}
+                    data-btn-key="${key}"
                   >
                     delete_sweep
                   </button>
@@ -46,12 +45,13 @@ export class RecipeList extends HTMLElement {
               <div
                 class="collapse card-body"
                 aria-labelledby="headingOne"
-                data-collapse=${key}
+                data-collapse="${key}"
               >
                 <ul>
-                  ${Object.entries(recipeList[key]).map(
-                    ([name, value]) =>
-                      html`
+                  ${Object.entries(recipeList[key])
+                    .map(
+                      ([name, value]) =>
+                        `
                         <li>
                           <span class="content-text">
                             ${name} : ${value}
@@ -60,8 +60,8 @@ export class RecipeList extends HTMLElement {
                             <button
                               class="btn btn-lg material-icons"
                               data-btn-value="RECIPE_LIST__PLUS"
-                              data-btn-key=${key}
-                              data-btn-item=${name}
+                              data-btn-key="${key}"
+                              data-btn-item="${name}"
                             >
                               add_box
                             </button>
@@ -69,15 +69,16 @@ export class RecipeList extends HTMLElement {
                             <button
                               class="btn btn-lg material-icons"
                               data-btn-value="RECIPE_LIST__MINUS"
-                              data-btn-key=${key}
-                              data-btn-item=${name}
+                              data-btn-key="${key}"
+                              data-btn-item="${name}"
                             >
                               indeterminate_check_box
                             </button>
                           </span>
                         </li>
                       `,
-                  )}
+                    )
+                    .join('')}
                 </ul>
               </div>
             </div>
@@ -85,10 +86,10 @@ export class RecipeList extends HTMLElement {
         );
       }
 
-      render(
-        html`
-          ${Object.keys(recipeList).length !== 0
-            ? html`
+      this.innerHTML = `
+          ${
+            Object.keys(recipeList).length !== 0
+              ? `
                 <h3
                   data-btn-value="COLLAPSE_ACTION"
                   data-btn-key="COLLAPSE_BLOCK"
@@ -96,14 +97,13 @@ export class RecipeList extends HTMLElement {
                   Recipe List
                 </h3>
               `
-            : ''}
+              : ''
+          }
 
           <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
-            ${itemTemplates}
+            ${itemTemplates.join('')}
           </div>
-        `,
-        this,
-      );
+        `;
     };
 
     renderView(recipeList);
