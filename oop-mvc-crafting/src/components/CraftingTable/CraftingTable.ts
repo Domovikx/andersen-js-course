@@ -1,5 +1,4 @@
 import store from '../../redux/helpers/store';
-import { html, render } from 'lit-html';
 
 import './craftingTable.scss';
 
@@ -31,8 +30,7 @@ export class CraftingTable extends HTMLElement {
     const renderView = (craftingTable: any, ingredientsList: any) => {
       const recipeList = craftingTable.recipeList;
 
-      render(
-        html`
+      this.innerHTML = `
           <h3 data-btn-key="COLLAPSE_ACTION">
             Crafting Table
           </h3>
@@ -62,36 +60,39 @@ export class CraftingTable extends HTMLElement {
             </div>
 
             <ul class="list-group">
-              ${Object.entries(recipeList).map(
-                ([key, { exists, required }]: any) =>
-                  html`
+              ${Object.entries(recipeList)
+                .map(([key, { exists, required }]: any) => {
+                  const template = `
                     <li
                       class="list-group-item ingredient-field"
-                      data-place-key=${key}
+                      data-place-key="${key}"
                     >
                       ${key} :
-                      ${exists <= ingredientsList[key]
-                        ? exists
-                        : ingredientsList[key]}
+                      ${
+                        exists <= ingredientsList[key]
+                          ? exists
+                          : ingredientsList[key]
+                      }
                       из ${required} (${ingredientsList[key]})
 
                       <span class="btn-group">
                         <button
                           class="btn btn-lg material-icons"
-                          data-btn-value=${key}
+                          data-btn-value="${key}"
                           data-btn-key="FORM_NEW_RECIPE__INGREDIENT_PLUS"
                         >
                           add_box
                         </button>
                       </span>
                     </li>
-                  `,
-              )}
+                  `;
+
+                  return template;
+                })
+                .join('')}
             </ul>
           </div>
-        `,
-        this,
-      );
+        `;
     };
 
     renderView(craftingTable, ingredientsList);

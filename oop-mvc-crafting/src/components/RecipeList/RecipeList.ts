@@ -1,5 +1,4 @@
 import store from '../../redux/helpers/store';
-import { html, render } from 'lit-html';
 
 import './recipeList.scss';
 import {
@@ -7,6 +6,12 @@ import {
   recipeListPlus,
   recipeListMinus,
 } from '../../redux/modules/recipeList/recipeListAction';
+import {
+  RECIPE_LIST,
+  SHOW_OFF,
+  SHOW_ON,
+} from '../../redux/modules/view/viewTypes';
+import { viewShow } from '../../redux/modules/view/viewAction';
 
 export class RecipeList extends HTMLElement {
   constructor() {
@@ -17,26 +22,32 @@ export class RecipeList extends HTMLElement {
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
-    const recipeList = store.getState().recipeList;
+    const state = store.getState();
 
-    const renderView = (recipeList: any) => {
+    const renderView = (recipeList: any, view: any) => {
       const itemTemplates = [];
+      const viewShow = view.show;
+      const viewList = view.list;
+
       for (let key in recipeList) {
+        const itemShow = viewList[key] ? 'show' : '';
+
         itemTemplates.push(
-          html`
+          `
             <div class="card">
               <div
                 class="card-header"
                 draggable="true"
                 data-btn-value="COLLAPSE_ACTION"
-                data-btn-key=${key}
+                data-btn-key="${key}"
+                data-show="${itemShow}"
               >
                 <span class="content-text">${key}</span>
                 <span class="btn-group">
                   <button
                     class="btn btn-lg material-icons"
                     data-btn-value="RECIPE_LIST__REMOVE"
-                    data-btn-key=${key}
+                    data-btn-key="${key}"
                   >
                     delete_sweep
                   </button>
@@ -44,14 +55,15 @@ export class RecipeList extends HTMLElement {
               </div>
 
               <div
-                class="collapse card-body"
+                class="collapse ${itemShow} card-body"
                 aria-labelledby="headingOne"
-                data-collapse=${key}
+                data-collapse="${key}"
               >
                 <ul>
-                  ${Object.entries(recipeList[key]).map(
-                    ([name, value]) =>
-                      html`
+                  ${Object.entries(recipeList[key])
+                    .map(
+                      ([name, value]) =>
+                        `
                         <li>
                           <span class="content-text">
                             ${name} : ${value}
@@ -60,8 +72,8 @@ export class RecipeList extends HTMLElement {
                             <button
                               class="btn btn-lg material-icons"
                               data-btn-value="RECIPE_LIST__PLUS"
-                              data-btn-key=${key}
-                              data-btn-item=${name}
+                              data-btn-key="${key}"
+                              data-btn-item="${name}"
                             >
                               add_box
                             </button>
@@ -69,15 +81,16 @@ export class RecipeList extends HTMLElement {
                             <button
                               class="btn btn-lg material-icons"
                               data-btn-value="RECIPE_LIST__MINUS"
-                              data-btn-key=${key}
-                              data-btn-item=${name}
+                              data-btn-key="${key}"
+                              data-btn-item="${name}"
                             >
                               indeterminate_check_box
                             </button>
                           </span>
                         </li>
                       `,
-                  )}
+                    )
+                    .join('')}
                 </ul>
               </div>
             </div>
@@ -85,33 +98,32 @@ export class RecipeList extends HTMLElement {
         );
       }
 
-      render(
-        html`
-          ${Object.keys(recipeList).length !== 0
-            ? html`
+      this.innerHTML = `
+          ${
+            Object.keys(recipeList).length !== 0
+              ? `
                 <h3
                   data-btn-value="COLLAPSE_ACTION"
-                  data-btn-key="COLLAPSE_BLOCK"
+                  data-show="${viewShow}"
                 >
                   Recipe List
                 </h3>
               `
-            : ''}
+              : ''
+          }
 
-          <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
-            ${itemTemplates}
+          <div class="collapse ${viewShow}">
+            ${itemTemplates.join('')}
           </div>
-        `,
-        this,
-      );
+        `;
     };
 
-    renderView(recipeList);
+    renderView(state.recipeList, state.view[RECIPE_LIST]);
 
     // Подписывапемся на обновление стейта
     store.subscribe(() => {
       const state = store.getState();
-      renderView(state.recipeList);
+      renderView(state.recipeList, state.view[RECIPE_LIST]);
     });
 
     /** ================= Controller =================
@@ -128,19 +140,14 @@ export class RecipeList extends HTMLElement {
       const key = target.getAttribute('data-btn-key');
       const value = target.getAttribute('data-btn-value');
       const item = target.getAttribute('data-btn-item');
+      const dataShow = target.getAttribute('data-show');
+
+      let action;
 
       switch (value) {
         case 'COLLAPSE_ACTION':
-          // TODO: Много повторений COLLAPSE_ACTION,
-          // можно вынести в отдельный хелпер
-          const collapseElement: any = document.querySelector(
-            `recipe-list [data-collapse="${key}"]`,
-          );
-          if (collapseElement.classList.contains('show')) {
-            collapseElement.classList.remove('show');
-          } else {
-            collapseElement.classList.add('show');
-          }
+          action = dataShow === 'show' ? SHOW_OFF : SHOW_ON;
+          store.dispatch(viewShow(RECIPE_LIST, action, key));
           return;
 
         case 'RECIPE_LIST__REMOVE':

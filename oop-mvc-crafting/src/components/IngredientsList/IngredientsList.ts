@@ -1,5 +1,4 @@
 import store from '../../redux/helpers/store';
-import { html, render } from 'lit-html';
 
 import './ingredientsList.scss';
 
@@ -15,6 +14,8 @@ export class IngredientsList extends HTMLElement {
   }
 
   connectedCallback() {
+    const self = this;
+
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
@@ -22,30 +23,31 @@ export class IngredientsList extends HTMLElement {
 
     const renderView = (ingredientsList: any) => {
       const itemTemplates = [];
+
       for (let key in ingredientsList) {
         itemTemplates.push(
-          html`
-            <li data-key=${key} draggable="true" class="list-group-item">
+          `
+            <li data-key="${key}" draggable="true" class="list-group-item">
               <span class="content-text">${key} : ${ingredientsList[key]}</span>
               <span class="btn-group">
                 <button
                   class="btn btn-lg material-icons"
                   data-btn-value="INGREDIENT_LIST__PLUS"
-                  data-btn-key=${key}
+                  data-btn-key="${key}"
                 >
                   add_box
                 </button>
                 <button
                   class="btn btn-lg material-icons"
                   data-btn-value="INGREDIENT_LIST__MINUS"
-                  data-btn-key=${key}
+                  data-btn-key="${key}"
                 >
                   indeterminate_check_box
                 </button>
                 <button
                   class="btn btn-lg material-icons"
                   data-btn-value="INGREDIENT_LIST__REMOVE"
-                  data-btn-key=${key}
+                  data-btn-key="${key}"
                 >
                   delete_sweep
                 </button>
@@ -55,10 +57,10 @@ export class IngredientsList extends HTMLElement {
         );
       }
 
-      render(
-        html`
-          ${Object.keys(ingredientsList).length !== 0
-            ? html`
+      this.innerHTML = `
+          ${
+            Object.keys(ingredientsList).length !== 0
+              ? `
                 <h3
                   data-btn-value="COLLAPSE_ACTION"
                   data-btn-key="COLLAPSE_BLOCK"
@@ -66,15 +68,14 @@ export class IngredientsList extends HTMLElement {
                   Ingredients list
                 </h3>
               `
-            : ''}
+              : ''
+          }
           <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
             <ul class="list-group overflow-auto">
-              ${itemTemplates}
+              ${itemTemplates.join('')}
             </ul>
           </div>
-        `,
-        this,
-      );
+        `;
     };
 
     renderView(ingredientsList);
@@ -101,8 +102,8 @@ export class IngredientsList extends HTMLElement {
 
       switch (value) {
         case 'COLLAPSE_ACTION':
-          const collapseElement: any = document.querySelector(
-            `ingredients-list [data-collapse="${key}"]`,
+          const collapseElement: any = self.querySelector(
+            `[data-collapse="${key}"]`,
           );
           if (collapseElement.classList.contains('show')) {
             collapseElement.classList.remove('show');

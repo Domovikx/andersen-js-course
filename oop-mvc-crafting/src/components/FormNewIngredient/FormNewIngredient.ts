@@ -1,5 +1,4 @@
 import store from '../../redux/helpers/store';
-import { html, render } from 'lit-html';
 
 import './formNewIngredient.scss';
 
@@ -16,8 +15,7 @@ export class FormNewIngredient extends HTMLElement {
      */
 
     const renderView = () => {
-      render(
-        html`
+      this.innerHTML = `
           <h3 data-action="COLLAPSE_ACTION">
             Adding a new ingredient
           </h3>
@@ -44,9 +42,7 @@ export class FormNewIngredient extends HTMLElement {
               </div>
             </form>
           </div>
-        `,
-        this,
-      );
+        `;
     };
 
     renderView();
@@ -61,6 +57,7 @@ export class FormNewIngredient extends HTMLElement {
      */
 
     this.addEventListener('click', onAction);
+    this.addEventListener('submit', onAction); // TODO: не должно работать!
 
     function onAction(event: Event | any) {
       event.preventDefault();

@@ -10,8 +10,6 @@ import CraftingTable from './components/CraftingTable';
 
 import ReadyList from './components/ReadyList';
 
-import { render, html } from 'lit-html';
-
 import store from './redux/helpers/store';
 import {
   stateHandler,
@@ -38,8 +36,7 @@ export default class AppCrafting extends HTMLElement {
 
     customElements.define('ready-list', ReadyList);
 
-    render(
-      html`
+    this.innerHTML = `
         <div class="overflow-auto direction-rtl">
           <recipe-list class="direction-ltr"></recipe-list>
           <ingredients-list class="direction-ltr"></ingredients-list>
@@ -50,8 +47,6 @@ export default class AppCrafting extends HTMLElement {
           <form-new-recipe></form-new-recipe>
           <crafting-table></crafting-table>
         </div>
-      `,
-      this,
-    );
+      `;
   }
 }
