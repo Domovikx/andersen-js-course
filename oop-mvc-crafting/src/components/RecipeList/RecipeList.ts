@@ -6,6 +6,12 @@ import {
   recipeListPlus,
   recipeListMinus,
 } from '../../redux/modules/recipeList/recipeListAction';
+import {
+  RECIPE_LIST,
+  SHOW_OFF,
+  SHOW_ON,
+} from '../../redux/modules/view/viewTypes';
+import { viewShow } from '../../redux/modules/view/viewAction';
 
 export class RecipeList extends HTMLElement {
   constructor() {
@@ -16,11 +22,16 @@ export class RecipeList extends HTMLElement {
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
-    const recipeList = store.getState().recipeList;
+    const state = store.getState();
 
-    const renderView = (recipeList: any) => {
+    const renderView = (recipeList: any, view: any) => {
       const itemTemplates = [];
+      const viewShow = view.show;
+      const viewList = view.list;
+
       for (let key in recipeList) {
+        const itemShow = viewList[key] ? 'show' : '';
+
         itemTemplates.push(
           `
             <div class="card">
@@ -29,6 +40,7 @@ export class RecipeList extends HTMLElement {
                 draggable="true"
                 data-btn-value="COLLAPSE_ACTION"
                 data-btn-key="${key}"
+                data-show="${itemShow}"
               >
                 <span class="content-text">${key}</span>
                 <span class="btn-group">
@@ -43,7 +55,7 @@ export class RecipeList extends HTMLElement {
               </div>
 
               <div
-                class="collapse card-body"
+                class="collapse ${itemShow} card-body"
                 aria-labelledby="headingOne"
                 data-collapse="${key}"
               >
@@ -92,7 +104,7 @@ export class RecipeList extends HTMLElement {
               ? `
                 <h3
                   data-btn-value="COLLAPSE_ACTION"
-                  data-btn-key="COLLAPSE_BLOCK"
+                  data-show="${viewShow}"
                 >
                   Recipe List
                 </h3>
@@ -100,18 +112,18 @@ export class RecipeList extends HTMLElement {
               : ''
           }
 
-          <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
+          <div class="collapse ${viewShow}">
             ${itemTemplates.join('')}
           </div>
         `;
     };
 
-    renderView(recipeList);
+    renderView(state.recipeList, state.view[RECIPE_LIST]);
 
     // Подписывапемся на обновление стейта
     store.subscribe(() => {
       const state = store.getState();
-      renderView(state.recipeList);
+      renderView(state.recipeList, state.view[RECIPE_LIST]);
     });
 
     /** ================= Controller =================
@@ -128,19 +140,14 @@ export class RecipeList extends HTMLElement {
       const key = target.getAttribute('data-btn-key');
       const value = target.getAttribute('data-btn-value');
       const item = target.getAttribute('data-btn-item');
+      const dataShow = target.getAttribute('data-show');
+
+      let action;
 
       switch (value) {
         case 'COLLAPSE_ACTION':
-          // TODO: Много повторений COLLAPSE_ACTION,
-          // можно вынести в отдельный хелпер
-          const collapseElement: any = document.querySelector(
-            `recipe-list [data-collapse="${key}"]`,
-          );
-          if (collapseElement.classList.contains('show')) {
-            collapseElement.classList.remove('show');
-          } else {
-            collapseElement.classList.add('show');
-          }
+          action = dataShow === 'show' ? SHOW_OFF : SHOW_ON;
+          store.dispatch(viewShow(RECIPE_LIST, action, key));
           return;
 
         case 'RECIPE_LIST__REMOVE':

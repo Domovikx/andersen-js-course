@@ -135,8 +135,6 @@ export class FormNewRecipe extends HTMLElement {
      * Подписка на события и управление
      */
 
-    const formNewRecipe: any = self.querySelector('#form_new_recipe');
-    console.log('formNewRecipe :>> ', formNewRecipe);
     this.addEventListener('click', onAction, false);
 
     function onAction(event: Event | any) {

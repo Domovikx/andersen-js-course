@@ -62,7 +62,6 @@ export class CraftingTable extends HTMLElement {
             <ul class="list-group">
               ${Object.entries(recipeList)
                 .map(([key, { exists, required }]: any) => {
-                  console.log('key :>> ', key);
                   const template = `
                     <li
                       class="list-group-item ingredient-field"
@@ -116,9 +115,7 @@ export class CraftingTable extends HTMLElement {
     function onClick(event: Event | any) {
       const target: Element = event.target;
       const key: any = target.getAttribute('data-btn-key');
-      console.log('key', key);
       const value = target.getAttribute('data-btn-value');
-      console.log('value', value);
 
       startAction(key, value);
     }

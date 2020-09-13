@@ -67,6 +67,13 @@ const initialState = {
       recipeList: { C2H5OH: 5, wood: 3, bandage: 3, fire: 10 },
     },
   },
+
+  view: {
+    RECIPE_LIST: {
+      show: 'show',
+      list: {},
+    },
+  },
 };
 
 export default initialState;
