@@ -148,3 +148,30 @@
   console.log('person :>> ', person); //
   console.log('person.getName() :>> ', person.getName()); //
 }
+
+// 10
+{
+  class Person {
+    constructor(name) {
+      this.name = name;
+    }
+    aboutMe(greetingWorld) {
+      return `${greetingWorld} ${this.name}`;
+    }
+  }
+  class Student extends Person {
+    constructor(name, age) {
+      super(name);
+      this.age = age;
+    }
+    aboutMe(greetingWorld) {
+      return `${super.aboutMe(greetingWorld)}. I am ${this.age}`;
+    }
+  }
+  const max = new Student('Max', 20);
+  const aboutMax = max.aboutMe('Hi! My name is');
+  console.log('aboutMax :>> ', aboutMax);
+  const sam = new Student('Sam', 33);
+  const aboutSam = sam.aboutMe('Hello! I am');
+  console.log('aboutSam :>> ', aboutSam);
+}
