@@ -19,7 +19,7 @@ function check(value) {
       }
     })
     .catch(error => {
-      console.log(error, `value: ${value}`);
+      console.log(error.message, `value: ${value}`);
     })
     .finally(() => console.log('This is finally!'));
 }

@@ -13,15 +13,13 @@ function query(URL) {
 }
 
 function getUserData() {
-  query(URL_1)
-    .then(res => res)
-    .then(obj => {
-      if (obj.getUsersData === true) {
-        query(URL_2).then(res => {
-          console.log('res :>> ', res);
-        });
-      }
-    });
+  query(URL_1).then(obj => {
+    if (obj.getUsersData) {
+      query(URL_2).then(res => {
+        console.log('res :>> ', res);
+      });
+    }
+  });
 }
 
 // check

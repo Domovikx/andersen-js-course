@@ -5,16 +5,12 @@
 
 // helper function
 function query(URL) {
-  const result = fetch(URL)
-    .then(response => response.json())
-    .then(
-      result => {
-        return result;
-      },
-      error => {
-        return { error: error.message.toString() };
-      }
-    );
+  const result = fetch(URL).then(
+    response => response.json(),
+    error => {
+      return { error: error.message };
+    }
+  );
   return result;
 }
 

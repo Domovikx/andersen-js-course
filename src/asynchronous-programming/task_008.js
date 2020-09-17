@@ -10,8 +10,7 @@ const getUsers = URL => fetch(URL);
 async function foo(URL) {
   try {
     const response = await getUsers(URL);
-    const data = await response.json();
-    const [user] = data;
+    const [user] = await response.json();
     console.log(user);
   } catch (error) {
     console.log('Error!', error);
