@@ -3,29 +3,30 @@
  * реализовать два варианте: параллельной и последовательной загрузки
  */
 
-// helper function
-function query(URL) {
-  const result = fetch(URL).then(
-    response => response.json(),
-    error => {
-      return { error: error.message };
-    }
-  );
-  return result;
-}
+// ********** Параллельное **********
 
 const URLS = [
   'error',
   'http://www.json-generator.com/api/json/get/cevhxOsZnS',
   'http://www.json-generator.com/api/json/get/cguaPsRxAi',
-  'http://www.json-generator.com/api/json/get/cfDZdmxnDm',
   'error',
+  'http://www.json-generator.com/api/json/get/cfDZdmxnDm',
   'http://www.json-generator.com/api/json/get/cfkrfOjrfS',
   'http://www.json-generator.com/api/json/get/ceQMMKpidK',
   'error',
 ];
 
 function parallelLoading() {
+  function query(URL) {
+    const result = fetch(URL).then(
+      response => response.json(),
+      error => {
+        return { error: error.message };
+      }
+    );
+    return result;
+  }
+
   Promise.all(
     URLS.map(URL => {
       const result = query(URL);
@@ -35,15 +36,40 @@ function parallelLoading() {
     console.log('>>> parallelLoading() - results: ', results);
   });
 }
-// parallelLoading();
+parallelLoading();
+
+// ********** Последовательное **********
+
+const URLS = [
+  'error',
+  'http://www.json-generator.com/api/json/get/cevhxOsZnS',
+  'http://www.json-generator.com/api/json/get/cguaPsRxAi',
+  'error',
+  'http://www.json-generator.com/api/json/get/cfDZdmxnDm',
+  'http://www.json-generator.com/api/json/get/cfkrfOjrfS',
+  'http://www.json-generator.com/api/json/get/ceQMMKpidK',
+  'error',
+];
 
 function consistentLoading() {
-  let chain = Promise.resolve();
-  const results = [];
-  URLS.forEach(URL => {
-    chain = chain.then(() => query(URL)).then(result => results.push(result));
+  function query(URL) {
+    const result = fetch(URL).then(
+      response => response.json(),
+      error => {
+        return { error: error.message };
+      }
+    );
+    return result;
+  }
+
+  let arr = [];
+  const promise = URLS.reduce((acc, url) => {
+    return acc.then(arr => query(url).then(result => [...arr, result]));
+  }, Promise.resolve(arr));
+
+  promise.then(results => {
+    console.log('>>> consistentLoading() - results: ', results);
   });
-  console.log('>>> consistentLoading() - results: ', results);
 }
 consistentLoading();
 
