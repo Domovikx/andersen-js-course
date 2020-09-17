@@ -35,14 +35,13 @@ function parallelLoading() {
     console.log('>>> parallelLoading() - results: ', results);
   });
 }
-parallelLoading();
+// parallelLoading();
 
 function consistentLoading() {
+  let chain = Promise.resolve();
   const results = [];
   URLS.forEach(URL => {
-    query(URL).then(result => {
-      results.push(result);
-    });
+    chain = chain.then(() => query(URL)).then(result => results.push(result));
   });
   console.log('>>> consistentLoading() - results: ', results);
 }
