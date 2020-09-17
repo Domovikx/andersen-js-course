@@ -10,7 +10,7 @@ const URL_2 = 'http://www.json-generator.com/api/json/get/cfVGucaXPC';
 async function getUserData() {
   const response = await query(URL_1);
 
-  if (response.getUsersData === true) {
+  if (response.getUsersData) {
     console.log(await query(URL_2));
   }
 }
