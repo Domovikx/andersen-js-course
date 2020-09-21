@@ -1,14 +1,12 @@
-/* eslint-disable */
-
 // 1
 {
-  console.log('x1 :>> ', x); // x1 :>>  undefined
+  console.log("x1 :>> ", x); // x1 :>>  undefined
   for (let i = 1; i <= 2; i++) {
     var x = 10 + i;
     let y = 20 + i;
   }
-  console.log('x2 :>> ', x); // x2 :>>  12
-  console.log('y :>> ', y); // ReferenceError: y is not defined
+  console.log("x2 :>> ", x); // x2 :>>  12
+  console.log("y :>> ", y); // ReferenceError: y is not defined
 }
 
 // 2
@@ -31,11 +29,11 @@
 
 // 3
 {
-  const x = (x => {
+  const x = ((x) => {
     x = 30;
   })(10);
   const y = x(); // x is not a function
-  console.log('y :>> ', y);
+  console.log("y :>> ", y);
 }
 
 // 4
@@ -45,11 +43,11 @@
   function setAge(age) {
     this.age = age;
   }
-  const setPersonAge = age => {
+  const setPersonAge = (age) => {
     person.age = new setAge(age).age;
   };
   setPersonAge(30);
-  console.log('person :>> ', person);
+  console.log("person :>> ", person);
 }
 
 // 5
@@ -63,7 +61,7 @@
   foo(bar);
   function bar() {
     return () => {
-      console.log('x :>> ', x); // 10
+      console.log("x :>> ", x); // 10
     };
   }
 }
@@ -77,7 +75,7 @@
   }
   foo.x = 30;
   function bar() {
-    console.log('x :>> ', x); // 50
+    console.log("x :>> ", x); // 50
   }
   foo.x = 40;
   const x = 50;
@@ -93,14 +91,14 @@
   function foo() {}
   const x = 10;
   const y = Boolean(x);
-  console.log('foo.__proto__ :>> ', foo.__proto__);
+  console.log("foo.__proto__ :>> ", foo.__proto__);
   console.log(
-    'foo.__proto__.foo.__proto__.foo.__proto__ :>> ',
+    "foo.__proto__.foo.__proto__.foo.__proto__ :>> ",
     foo.__proto__.foo.__proto__.foo.__proto__
   );
-  console.log('x.__proto__ :>> ', x.__proto__);
-  console.log('y.__proto__ :>> ', y.__proto__);
-  console.log('Object.__proto__ :>> ', Object.__proto__);
+  console.log("x.__proto__ :>> ", x.__proto__);
+  console.log("y.__proto__ :>> ", y.__proto__);
+  console.log("Object.__proto__ :>> ", Object.__proto__);
 }
 
 // 8
@@ -114,15 +112,15 @@
   }
   const p = new Person();
   const s = new Student();
-  console.log('Person.prototype :>> ', Person.prototype);
+  console.log("Person.prototype :>> ", Person.prototype);
   // { constructor: class Person, getName: ƒ getName(), __proto__: Object}
-  console.log('Student.prototype :>> ', Student.prototype);
+  console.log("Student.prototype :>> ", Student.prototype);
   // Person { constructor: class Student, getAge: ƒ getAge(), __proto__: Object }
-  console.log('p.__proto__) :>> ', p.__proto__);
+  console.log("p.__proto__) :>> ", p.__proto__);
   // { constructor: class Person, getName: ƒ getName(), __proto__: Object }
-  console.log('s.prototype :>> ', s.prototype);
+  console.log("s.prototype :>> ", s.prototype);
   // undefined
-  console.log('s.__proto__ :>> ', s.__proto__);
+  console.log("s.__proto__ :>> ", s.__proto__);
   // Person {constructor: class Student, getAge: ƒ getAge(), __proto__: Object}
 }
 
@@ -140,15 +138,15 @@
   // написать функцию newOp()
   function newOp(Person, name, age) {
     const obj1 = Object.create(Person.prototype).__proto__;
-    console.log('obj1', obj1); // {constructor: ƒ, getName: ƒ, test: ƒ}
+    console.log("obj1", obj1); // {constructor: ƒ, getName: ƒ, test: ƒ}
     const obj2 = { ...obj1, name, age };
-    console.log('obj2', obj2); // {name: "Max", age: 20}
+    console.log("obj2", obj2); // {name: "Max", age: 20}
     // а как правильно ??????????
     return obj2;
   }
-  const person = newOp(Person, 'Max', 20);
-  console.log('person :>> ', person); //
-  console.log('person.getName() :>> ', person.getName()); //
+  const person = newOp(Person, "Max", 20);
+  console.log("person :>> ", person); //
+  console.log("person.getName() :>> ", person.getName()); //
 }
 
 // 10
@@ -170,10 +168,10 @@
       return `${super.aboutMe(greetingWorld)}. I am ${this.age}`;
     }
   }
-  const max = new Student('Max', 20);
-  const aboutMax = max.aboutMe('Hi! My name is');
-  console.log('aboutMax :>> ', aboutMax);
-  const sam = new Student('Sam', 33);
-  const aboutSam = sam.aboutMe('Hello! I am');
-  console.log('aboutSam :>> ', aboutSam);
+  const max = new Student("Max", 20);
+  const aboutMax = max.aboutMe("Hi! My name is");
+  console.log("aboutMax :>> ", aboutMax);
+  const sam = new Student("Sam", 33);
+  const aboutSam = sam.aboutMe("Hello! I am");
+  console.log("aboutSam :>> ", aboutSam);
 }
