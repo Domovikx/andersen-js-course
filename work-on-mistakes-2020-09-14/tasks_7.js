@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // 1
 {
   console.log('x1 :>> ', x); // x1 :>>  undefined
