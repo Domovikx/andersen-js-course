@@ -1,0 +1,40 @@
+{
+  "workbench.tree.indent": 20,
+  "cSpell.language": "en, ru",
+  "editor.minimap.enabled": false,
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "explorer.compactFolders": false,
+
+  "explorer.confirmDelete": true,
+  "explorer.confirmDragAndDrop": true,
+
+  "files.eol": "\n",
+
+  "cSpell.words": [
+    "Nums",
+    "Parens",
+    "Колбек",
+    "Подписывапемся",
+    "Раскомментировать",
+    "автокомпиляции",
+    "встрелились",
+    "вызова",
+    "дефаултные",
+    "дефаултный",
+    "дефолтное",
+    "дефолтными",
+    "кастомно",
+    "конфига",
+    "мутируется",
+    "объедененных",
+    "рендеринг",
+    "рендерит",
+    "рефакторить",
+    "стейт",
+    "стейта",
+    "стейтом",
+    "стор",
+    "стором"
+  ]
+}
