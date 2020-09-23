@@ -1,5 +1,5 @@
 import './assets/scss/main.scss';
 
-import { App } from './App';
+import { AppComponent } from './components/AppComponent/AppComponent';
 
-customElements.define('app-main', App);
+customElements.define('app-component', AppComponent);

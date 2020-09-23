@@ -4,9 +4,9 @@
   "description": "munchkin counter",
   "private": true,
   "scripts": {
-    "client_start": "npm run start --prefix src/client",
-    "server_start": "nodemon -x ts-node src/server/index.ts",
-    "dev": "concurrently \"npm run server_start\" \"npm run client_start\""
+    "start": "concurrently \"npm run server_start\" \"npm run client_start\"",
+    "start_client": "npm run start --prefix src/client",
+    "start_server": "nodemon -x ts-node src/server/index.ts"
   },
   "browserslist": "> 0.25%, not dead",
   "keywords": [

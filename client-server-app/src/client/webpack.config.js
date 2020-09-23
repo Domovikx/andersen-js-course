@@ -65,6 +65,13 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
+        options: {
+          attributes: false,
+        },
+      },
       // оставлю на случай использования чистых css в проекте
       {
         test: /\.css$/,

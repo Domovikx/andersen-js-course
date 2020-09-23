@@ -1,4 +1,4 @@
-import { PORT_CLIENT, PORT_SERVER } from '../config/constants';
+import { PORT_SERVER } from './config/config';
 import { server } from './server';
 
 const port = process.env.PORT || PORT_SERVER;
