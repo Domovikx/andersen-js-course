@@ -11,7 +11,8 @@
     "client_build": "webpack --mode production",
     "client_b": "webpack --mode production",
     "server": "ts-node src/server/index.ts",
-    "server_run": "nodemon -x ts-node src/server/index.ts"
+    "server_run": "nodemon -x ts-node src/server/index.ts",
+    "s": "nodemon -x ts-node src/server/index.ts"
   },
   "browserslist": "> 0.25%, not dead",
   "keywords": [

@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "5f6a2562a5e1071190715f1c",
+    "name": "test2",
+    "sex": "test",
+    "level": 0,
+    "power": 0,
+    "class": "test",
+    "race": "0",
+    "dice": 0,
+    "__v": 0
+  },
+  {
+    "_id": "5f6a2563a5e1071190715f1d",
+    "name": "test2",
+    "sex": "test",
+    "level": 0,
+    "power": 0,
+    "class": "test",
+    "race": "0",
+    "dice": 0,
+    "__v": 0
+  },
+  {
+    "_id": "5f6a2564a5e1071190715f1e",
+    "name": "test2",
+    "sex": "test",
+    "level": 0,
+    "power": 0,
+    "class": "test",
+    "race": "0",
+    "dice": 0,
+    "__v": 0
+  }
+]
