@@ -9,9 +9,10 @@
   "explorer.confirmDelete": true,
   "explorer.confirmDragAndDrop": true,
 
-  "files.eol": "\n",
+  "files.eol": "\r\n",
 
   "cSpell.words": [
+    "Domovikx",
     "Nums",
     "Parens",
     "Колбек",

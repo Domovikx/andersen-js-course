@@ -2,6 +2,11 @@
 
 - https://docs.google.com/document/d/1egIDLGZUy-2fuMHQ3RjeLRCkNt1o67osoGfNsP3GUck
 
+## how to run
+
+- npm i -g webpack-dev-server
+- npm i -D webpack webpack-cli webpack-dev-server
+
 ## GIT commands helper
 
 ```bash

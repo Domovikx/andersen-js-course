@@ -1,9 +1,8 @@
+import { PORT_CLIENT, PORT_SERVER } from '../config/constants';
 import { server } from './server';
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || PORT_SERVER;
 
 server.listen(port, () => {
-  console.clear();
-  console.info(`http://localhost:${port} - Server`);
-  console.info(`http://localhost:8080 - Frontend`);
+  console.info(`\nhttp://localhost:${port} - Server started - success.\n`);
 });
