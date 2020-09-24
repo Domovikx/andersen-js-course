@@ -33,13 +33,11 @@ export class PlayerController {
   }
 
   async create(req: any, res: Response) {
+    console.log('req', req);
+    console.log('create :>> ');
     const category = new PlayerModel({
       // TODO !!!
-
-      // name: req.body.name,
-      // user: req.user.id,
-      // imageSrc: req.file ? req.file.path : '',
-
+      number: 0,
       name: 'name',
       sex: 'sex',
       level: 0,

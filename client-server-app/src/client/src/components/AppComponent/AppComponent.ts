@@ -2,6 +2,8 @@
 import html from './appComponent.html';
 import './appComponent.scss';
 
+import { ACTION__PLAYERS__GET_ALL_PLAYERS } from '../../storex/module/players';
+
 import HeaderComponent from '../HeaderComponent';
 import MainComponent from '../MainComponent';
 import NavComponent from '../NavComponent';
@@ -22,6 +24,20 @@ export class AppComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this.innerHTML = html;
+    /** ================= VIEW =================
+     * Получение стейта и его рендеринг
+     */
+
+    const renderAppComponent = () => {
+      this.innerHTML = html;
+    };
+
+    renderAppComponent();
+
+    /** ================= Controller =================
+     * Подписка на события и управление
+     */
+
+    ACTION__PLAYERS__GET_ALL_PLAYERS();
   }
 }

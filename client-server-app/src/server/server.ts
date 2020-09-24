@@ -1,5 +1,7 @@
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
+import morgan from 'morgan';
 import { connect } from 'mongoose';
 import { Request, Response } from 'express';
 import { MONGO_URI } from './config/config';
@@ -29,9 +31,15 @@ server.get('/api', (req: Request, res: Response): void => {
   });
 });
 
+// morgan
+server.use(morgan('dev'));
+
 // body-parser
 server.use(urlencoded({ extended: true }));
 server.use(json());
+
+// cors
+server.use(cors());
 
 // routes
 server.use('/api/player', playerRoute);

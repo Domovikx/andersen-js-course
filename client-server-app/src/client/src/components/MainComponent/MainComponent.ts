@@ -12,17 +12,15 @@ export class MainComponent extends HTMLElement {
      * Получение стейта и его рендеринг
      */
 
-    const renderView = () => {
+    const renderMainComponent = () => {
       this.innerHTML = html;
     };
 
-    renderView();
+    renderMainComponent();
 
     /** ================= Controller =================
      * Подписка на события и управление
      */
-
-    this.addEventListener('storage', onAction);
 
     function onAction(event: Event | any) {
       event.preventDefault();
@@ -36,9 +34,5 @@ export class MainComponent extends HTMLElement {
           return;
       }
     }
-
-    /** ================= Model =================
-     * Получение данных с серверной части, работа с данными
-     */
   }
 }
