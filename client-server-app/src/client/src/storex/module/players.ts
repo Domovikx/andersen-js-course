@@ -32,7 +32,15 @@ export async function ACTION__PLAYERS__GET_ALL_PLAYERS() {
 
 export async function ACTION__PLAYERS__GET_PLAYER_BY_ID(id: string) {}
 
-export async function ACTION__PLAYERS__DELETE_PLAYER(id: string) {}
+export async function ACTION__PLAYERS__DELETE_PLAYER(id: string) {
+  const URL = `${URL_SERVER}/api/player/${id}`;
+  try {
+    await fetch(URL, { method: 'DELETE' });
+    await ACTION__PLAYERS__GET_ALL_PLAYERS();
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 export async function ACTION__PLAYERS__CREATE_PLAYER(data?: any) {
   console.log('ACTION__PLAYERS__CREATE_PLAYER');

@@ -1,4 +1,7 @@
-import { GETTER__PLAYERS__GET_ALL_PLAYERS } from '../../storex/module/players';
+import {
+  ACTION__PLAYERS__DELETE_PLAYER,
+  GETTER__PLAYERS__GET_ALL_PLAYERS,
+} from '../../storex/module/players';
 // @ts-ignore: disable-next-line
 import html from './playersListComponent.html';
 import './playersListComponent.scss';
@@ -52,5 +55,28 @@ export class PlayersListComponent extends HTMLElement {
     /** ================= Controller =================
      * Подписка на события и управление
      */
+    this.addEventListener('click', onActon, false);
+    ('ACTION__PLAYERS__DELETE_PLAYER');
+    function onActon(event: any) {
+      const target: Element = event.target;
+      const key: any = target.getAttribute('data-key');
+      console.log('key', key);
+      const action = target.getAttribute('data-action');
+      console.log('action', action);
+
+      switch (action) {
+        case 'ACTION__PLAYERS__DELETE_PLAYER':
+          if (confirm(`Удалить игрока?`)) {
+            (async () => {
+              await ACTION__PLAYERS__DELETE_PLAYER(key);
+              renderPlayersListComponent();
+            })();
+          }
+          return;
+
+        default:
+          return;
+      }
+    }
   }
 }

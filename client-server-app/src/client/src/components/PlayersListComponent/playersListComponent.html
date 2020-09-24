@@ -2,17 +2,15 @@
   <header>PlayersListComponent</header>
 
   <template class="template-card">
-    <section
-      class="btn-card card card-body"
-      data-key="key"
-      data-action="action"
-    >
-      <header class="player-name">player name</header>
+    <section class="card card-body">
+      <header class="player-name" data-key="key" data-action="action">
+        player name
+      </header>
       <section class="player-info">
         <button
           class="btn-remove-player btn material-icons"
           data-key="key"
-          data-action="action"
+          data-action="ACTION__PLAYERS__DELETE_PLAYER"
         >
           person_remove
         </button>
