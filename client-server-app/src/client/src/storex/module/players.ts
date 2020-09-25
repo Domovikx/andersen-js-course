@@ -24,7 +24,7 @@ export async function ACTION__PLAYERS__GET_ALL_PLAYERS() {
 
       return { ...acc, [cur._id]: player };
     }, {});
-    MUTATION__PLAYERS__SET_ALL_PLAYERS(players);
+    await MUTATION__PLAYERS__SET_ALL_PLAYERS(players);
   } catch (error) {
     console.error('Error:', error);
   }
@@ -43,8 +43,7 @@ export async function ACTION__PLAYERS__DELETE_PLAYER(id: string) {
 }
 
 export async function ACTION__PLAYERS__CREATE_PLAYER(data?: any) {
-  console.log('ACTION__PLAYERS__CREATE_PLAYER');
-
+  // TODO: add data
   const URL = `${URL_SERVER}/api/player/create`;
   try {
     await fetch(URL, { method: 'POST' });
@@ -54,7 +53,21 @@ export async function ACTION__PLAYERS__CREATE_PLAYER(data?: any) {
   }
 }
 
-export async function ACTION__PLAYERS__UPDATE_PLAYER(id: string, data: any) {}
+export async function ACTION__PLAYERS__UPDATE_PLAYER(id: string, player: any) {
+  const URL = `${URL_SERVER}/api/player/update/${id}`;
+  try {
+    await fetch(URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({ id, player }),
+    });
+    await ACTION__PLAYERS__GET_ALL_PLAYERS();
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
 
 /** ========== MUTATIONS ==========
  * Может принимать объект. Обновляет localStorage

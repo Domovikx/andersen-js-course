@@ -1,10 +1,12 @@
-import {
-  ACTION__PLAYERS__DELETE_PLAYER,
-  GETTER__PLAYERS__GET_ALL_PLAYERS,
-} from '../../storex/module/players';
 // @ts-ignore: disable-next-line
 import html from './playersListComponent.html';
 import './playersListComponent.scss';
+
+import {
+  ACTION__PLAYERS__DELETE_PLAYER,
+  ACTION__PLAYERS__UPDATE_PLAYER,
+  GETTER__PLAYERS__GET_ALL_PLAYERS,
+} from '../../storex/module/players';
 
 export class PlayersListComponent extends HTMLElement {
   constructor() {
@@ -42,8 +44,8 @@ export class PlayersListComponent extends HTMLElement {
         totalText.textContent = level + power || 0;
 
         const dataKeyAll: any = clone.querySelectorAll('[data-key]');
-        dataKeyAll.forEach((el: any) => {
-          el.setAttribute('data-key', key);
+        dataKeyAll.forEach((dataKeyElement: any) => {
+          dataKeyElement.setAttribute('data-key', key);
         });
 
         templateCard.parentNode.appendChild(clone);
@@ -60,9 +62,11 @@ export class PlayersListComponent extends HTMLElement {
     function onActon(event: any) {
       const target: Element = event.target;
       const key: any = target.getAttribute('data-key');
-      console.log('key', key);
-      const action = target.getAttribute('data-action');
-      console.log('action', action);
+      const action: any = target.getAttribute('data-action');
+      const property: any = target.getAttribute('data-property');
+
+      const players = GETTER__PLAYERS__GET_ALL_PLAYERS();
+      const player = players[key];
 
       switch (action) {
         case 'ACTION__PLAYERS__DELETE_PLAYER':
@@ -72,6 +76,16 @@ export class PlayersListComponent extends HTMLElement {
               renderPlayersListComponent();
             })();
           }
+          return;
+
+        case 'ACTION__PLAYERS__PROPERTY_INCREASE':
+          player[property]++;
+          ACTION__PLAYERS__UPDATE_PLAYER(key, player);
+          return;
+
+        case 'ACTION__PLAYERS__PROPERTY_DECREASE':
+          player[property]--;
+          ACTION__PLAYERS__UPDATE_PLAYER(key, player);
           return;
 
         default:

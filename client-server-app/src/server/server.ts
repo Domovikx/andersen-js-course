@@ -1,11 +1,11 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { connect } from 'mongoose';
 import { Request, Response } from 'express';
 import { MONGO_URI } from './config/config';
-import { urlencoded, json } from 'body-parser';
 
 import { playerRoute } from './routes/playerRoute';
 
@@ -35,8 +35,8 @@ server.get('/api', (req: Request, res: Response): void => {
 server.use(morgan('dev'));
 
 // body-parser
-server.use(urlencoded({ extended: true }));
-server.use(json());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
 
 // cors
 server.use(cors());

@@ -3,7 +3,7 @@ import { PlayerModel } from '../models/PlayerModel';
 import { errorHandler } from '../utils/errorHandler';
 
 export class PlayerController {
-  async getAll(req: any, res: Response) {
+  async getAll(req: Request, res: Response) {
     try {
       const players = await PlayerModel.find();
       res.status(200).json(players);
@@ -32,9 +32,8 @@ export class PlayerController {
     }
   }
 
-  async create(req: any, res: Response) {
+  async create(req: Request, res: Response) {
     console.log('req', req);
-    console.log('create :>> ');
     const category = new PlayerModel({
       // TODO !!!
       number: 0,
@@ -57,22 +56,11 @@ export class PlayerController {
   }
 
   async update(req: any, res: Response) {
-    // TODO !!!
-    // const updated: any = {
-    //   name: req.body.name,
-    // };
-    // if (req.file) {
-    //   updated.imageSrc = req.file.path;
-    // }
-    // try {
-    //   const category = await PlayerModel.findOneAndUpdate(
-    //     { _id: req.params.id },
-    //     { $set: updated },
-    //     { new: true },
-    //   );
-    //   res.status(200).json(category);
-    // } catch (err) {
-    //   errorHandler(res, err);
-    // }
+    try {
+      console.log('req.body', req.body);
+      res.status(200).json(req.body);
+    } catch (err) {
+      errorHandler(res, err);
+    }
   }
 }
