@@ -14,6 +14,7 @@ export class PlayersListComponent extends HTMLElement {
   }
 
   async connectedCallback() {
+    const self = this;
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
@@ -24,10 +25,8 @@ export class PlayersListComponent extends HTMLElement {
       const players = GETTER__PLAYERS__GET_ALL_PLAYERS();
 
       const templateCard: any = this.querySelector('.template-card');
-      console.log('templateCard', templateCard);
 
       Object.entries(players).forEach(([key, val]: any) => {
-        console.log('val', val);
         const { name, level, power } = val;
         const clone = templateCard.content.cloneNode(true);
 
@@ -58,33 +57,43 @@ export class PlayersListComponent extends HTMLElement {
      * Подписка на события и управление
      */
     this.addEventListener('click', onActon, false);
-    ('ACTION__PLAYERS__DELETE_PLAYER');
-    function onActon(event: any) {
+
+    async function onActon(event: any) {
       const target: Element = event.target;
-      const key: any = target.getAttribute('data-key');
       const action: any = target.getAttribute('data-action');
+      if (!action) return;
+      const key: any = target.getAttribute('data-key');
       const property: any = target.getAttribute('data-property');
 
       const players = GETTER__PLAYERS__GET_ALL_PLAYERS();
       const player = players[key];
 
+      const propertyText: any = self.querySelector(
+        `.${property}-text[data-key='${key}']`,
+      );
+      const totalText: any = self.querySelector(
+        `.total-text[data-key='${key}']`,
+      );
+
       switch (action) {
         case 'ACTION__PLAYERS__DELETE_PLAYER':
           if (confirm(`Удалить игрока?`)) {
-            (async () => {
-              await ACTION__PLAYERS__DELETE_PLAYER(key);
-              renderPlayersListComponent();
-            })();
+            await ACTION__PLAYERS__DELETE_PLAYER(key);
+            renderPlayersListComponent();
           }
           return;
 
         case 'ACTION__PLAYERS__PROPERTY_INCREASE':
           player[property]++;
+          propertyText.textContent++;
+          totalText.textContent++;
           ACTION__PLAYERS__UPDATE_PLAYER(key, player);
           return;
 
         case 'ACTION__PLAYERS__PROPERTY_DECREASE':
           player[property]--;
+          propertyText.textContent--;
+          totalText.textContent--;
           ACTION__PLAYERS__UPDATE_PLAYER(key, player);
           return;
 

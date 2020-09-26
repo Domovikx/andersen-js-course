@@ -57,8 +57,12 @@ export class PlayerController {
 
   async update(req: any, res: Response) {
     try {
-      console.log('req.body', req.body);
-      res.status(200).json(req.body);
+      const player = await PlayerModel.findByIdAndUpdate(
+        { _id: req.body.id },
+        req.body.player,
+      );
+      console.log('player', player);
+      res.status(200).json(player); //TODO: опционально возврат player
     } catch (err) {
       errorHandler(res, err);
     }

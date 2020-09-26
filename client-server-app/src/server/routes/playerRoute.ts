@@ -1,9 +1,9 @@
 /**
- * (GET) http://localhost:3000/api/player/all - getAll +
- * (GET) http://localhost:3000/api/player/:id - getById +
- * (DELETE) http://localhost:3000/api/player/:id - remove +
- * (POST) http://localhost:3000/api/player/create - create +-
- * (PATCH) http://localhost:3000/api/player/update/:id - update -
+ * (GET) http://localhost:3000/api/player/all - getAll
+ * (GET) http://localhost:3000/api/player/:id - getById
+ * (DELETE) http://localhost:3000/api/player/:id - remove
+ * (POST) http://localhost:3000/api/player/create - create
+ * (PATCH) http://localhost:3000/api/player/update - update
  */
 
 import express from 'express';
@@ -20,6 +20,6 @@ playerRoute.delete('/:id', playerController.remove);
 
 playerRoute.post('/create', playerController.create);
 
-playerRoute.post('/update/:id', playerController.update);
+playerRoute.patch('/update', playerController.update);
 
 export { playerRoute };

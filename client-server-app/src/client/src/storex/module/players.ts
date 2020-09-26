@@ -24,7 +24,7 @@ export async function ACTION__PLAYERS__GET_ALL_PLAYERS() {
 
       return { ...acc, [cur._id]: player };
     }, {});
-    await MUTATION__PLAYERS__SET_ALL_PLAYERS(players);
+    MUTATION__PLAYERS__SET_ALL_PLAYERS(players);
   } catch (error) {
     console.error('Error:', error);
   }
@@ -54,10 +54,10 @@ export async function ACTION__PLAYERS__CREATE_PLAYER(data?: any) {
 }
 
 export async function ACTION__PLAYERS__UPDATE_PLAYER(id: string, player: any) {
-  const URL = `${URL_SERVER}/api/player/update/${id}`;
+  const URL = `${URL_SERVER}/api/player/update`;
   try {
     await fetch(URL, {
-      method: 'POST',
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
