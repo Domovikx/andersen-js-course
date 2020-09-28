@@ -10,7 +10,8 @@ players-list-component {
     place-content: center;
     height: 50px;
     width: 50px;
-    background-color: orangered;
+    // background-color: orangered;
+    border: 6px solid orangered;
     border-radius: 50%;
   }
   .player-info {

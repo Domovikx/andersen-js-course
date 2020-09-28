@@ -35,10 +35,9 @@ export class PlayerController {
   async create(req: Request, res: Response) {
     console.log('req', req);
     const category = new PlayerModel({
-      // TODO !!!
       number: 0,
       name: 'name',
-      sex: 'sex',
+      sex: 'man',
       level: 0,
       power: 0,
       class: 'class',
@@ -61,7 +60,6 @@ export class PlayerController {
         { _id: req.body.id },
         req.body.player,
       );
-      console.log('player', player);
       res.status(200).json(player); //TODO: опционально возврат player
     } catch (err) {
       errorHandler(res, err);

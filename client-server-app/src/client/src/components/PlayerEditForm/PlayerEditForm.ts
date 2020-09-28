@@ -9,5 +9,19 @@ export class PlayerEditForm extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = html;
+
+    /** ================= VIEW =================
+     * Получение стейта и его рендеринг
+     */
+
+    /** ================= Controller =================
+     * Подписка на события и управление
+     */
+
+    function init() {
+      // addEventListener('hashchange', routerHandler);
+      // routerHandler();
+    }
+    init();
   }
 }
