@@ -21,7 +21,7 @@ export const PlayerModel = mongoose.model(
     },
     sex: {
       type: String,
-      required: true,
+      required: false,
     },
     level: {
       type: Number,
@@ -43,7 +43,7 @@ export const PlayerModel = mongoose.model(
       type: Number,
       required: false,
     },
-    collar: {
+    color: {
       type: String,
       required: false,
     },

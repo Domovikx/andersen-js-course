@@ -15,7 +15,6 @@ export class RouterOutlet extends HTMLElement {
      */
 
     const renderRouterOutlet = (tag?: any) => {
-      console.log('tag :>> ', tag);
       this.innerHTML = tag || `Well let's play :)`;
     };
 

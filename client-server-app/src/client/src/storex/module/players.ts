@@ -1,39 +1,38 @@
 /** ========== ACTIONS ==========
- * Создаем экшены, работаем с сайд эффектами
+ * Выполнение экшен. Работа с сайд эффектами
  */
 
 import { URL_SERVER } from '../../config/constants';
+import { PLAYER } from '../../constants/player';
 
 export async function ACTION__PLAYERS__GET_ALL_PLAYERS() {
   const URL = `${URL_SERVER}/api/player/all`;
+
   try {
     const response = await fetch(URL, { method: 'GET' });
     const json: [] = await response.json();
     const players = json.reduce((acc: any, cur: any) => {
-      const player = {
-        number: cur.number || null,
-        name: cur.name || null,
-        sex: cur.sex || null,
-        level: cur.level || null,
-        power: cur.power || null,
-        class: cur.class || null,
-        race: cur.race || null,
-        dice: cur.dice || null,
-        collar: cur.collar || null,
-      };
+      const player: any = { ...PLAYER };
+      Object.keys(PLAYER).forEach((property) => {
+        player[property] = cur[property] || null;
+      });
 
       return { ...acc, [cur._id]: player };
     }, {});
+
     MUTATION__PLAYERS__SET_ALL_PLAYERS(players);
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-export async function ACTION__PLAYERS__GET_PLAYER_BY_ID(id: string) {}
+export async function ACTION__PLAYERS__GET_PLAYER_BY_ID(id: string) {
+  // TODO: reserved
+}
 
 export async function ACTION__PLAYERS__DELETE_PLAYER(id: string) {
   const URL = `${URL_SERVER}/api/player/${id}`;
+
   try {
     await fetch(URL, { method: 'DELETE' });
     await ACTION__PLAYERS__GET_ALL_PLAYERS();
@@ -42,12 +41,25 @@ export async function ACTION__PLAYERS__DELETE_PLAYER(id: string) {
   }
 }
 
-export async function ACTION__PLAYERS__CREATE_PLAYER(data?: any) {
-  // TODO: add data
+export async function ACTION__PLAYERS__CREATE_PLAYER(player?: any) {
   const URL = `${URL_SERVER}/api/player/create`;
+  if (!player) {
+    player = { ...PLAYER };
+  }
+
   try {
-    await fetch(URL, { method: 'POST' });
-    ACTION__PLAYERS__GET_ALL_PLAYERS();
+    const response = await fetch(URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({ player }),
+    });
+    const createdPlayer = await response.json();
+
+    await ACTION__PLAYERS__GET_ALL_PLAYERS();
+
+    return { id: createdPlayer._id, player: createdPlayer };
   } catch (error) {
     console.error('Error:', error);
   }
@@ -55,6 +67,7 @@ export async function ACTION__PLAYERS__CREATE_PLAYER(data?: any) {
 
 export async function ACTION__PLAYERS__UPDATE_PLAYER(id: string, player: any) {
   const URL = `${URL_SERVER}/api/player/update`;
+
   try {
     await fetch(URL, {
       method: 'PATCH',
@@ -63,6 +76,7 @@ export async function ACTION__PLAYERS__UPDATE_PLAYER(id: string, player: any) {
       },
       body: JSON.stringify({ id, player }),
     });
+
     await ACTION__PLAYERS__GET_ALL_PLAYERS();
   } catch (error) {
     console.error('Error:', error);
@@ -70,7 +84,7 @@ export async function ACTION__PLAYERS__UPDATE_PLAYER(id: string, player: any) {
 }
 
 /** ========== MUTATIONS ==========
- * Может принимать объект. Обновляет localStorage
+ * Обновление localStorage
  */
 
 function MUTATION__PLAYERS__SET_ALL_PLAYERS(players: any) {
@@ -78,11 +92,17 @@ function MUTATION__PLAYERS__SET_ALL_PLAYERS(players: any) {
 }
 
 /** ========== GETTERS ==========
- * Достает данные из localStorage
+ * Получение данных из localStorage
  */
 
 export function GETTER__PLAYERS__GET_ALL_PLAYERS() {
   const json: any = localStorage.getItem('players') || null;
   const players = JSON.parse(json);
   return players;
+}
+
+export function GETTER__PLAYERS__GET_PLAYER_BY_ID(id: any) {
+  const json: any = localStorage.getItem('players') || null;
+  const players = JSON.parse(json);
+  return players[id] || null;
 }

@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "start": "concurrently \"npm run start_server\" \"npm run start_client\"",
-    "start_client": "npm run start --prefix src/client",
-    "start_server": "nodemon -x ts-node src/server/index.ts"
+    "start_server": "nodemon -x ts-node src/server/index.ts",
+    "start_client": "npm run start --prefix src/client"
   },
   "browserslist": "> 0.25%, not dead",
   "keywords": [

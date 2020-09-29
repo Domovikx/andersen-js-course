@@ -27,11 +27,25 @@ export class PlayersListComponent extends HTMLElement {
       const templateCard: any = this.querySelector('.template-card');
 
       Object.entries(players).forEach(([key, val]: any) => {
-        const { name, level, power } = val;
+        const {
+          name,
+          level,
+          power,
+          color,
+          number,
+          sex,
+          class: plClass,
+          race,
+          dice,
+        } = val;
+
         const clone = templateCard.content.cloneNode(true);
 
         const playerName = clone.querySelector('.player-name');
-        playerName.textContent = name || 'anonym';
+        playerName.textContent = name ? `${number || ''} ${name}` : 'anonym';
+
+        const playerColor = clone.querySelector('.player-color');
+        playerColor.setAttribute('style', `border-color:${color}`);
 
         const levelText = clone.querySelector('.level-text');
         levelText.textContent = level || 0;
@@ -41,6 +55,18 @@ export class PlayersListComponent extends HTMLElement {
 
         const totalText = clone.querySelector('.total-text');
         totalText.textContent = level + power || 0;
+
+        const sexText = clone.querySelector('.sex-text');
+        sexText.textContent = sex || '';
+
+        const classText = clone.querySelector('.class-text');
+        classText.textContent = plClass || '';
+
+        const raceText = clone.querySelector('.race-text');
+        raceText.textContent = race || '';
+
+        const diceText = clone.querySelector('.dice-text');
+        diceText.textContent = `dice: ${dice}` || 1;
 
         const dataKeyAll: any = clone.querySelectorAll('[data-key]');
         dataKeyAll.forEach((dataKeyElement: any) => {
@@ -95,6 +121,10 @@ export class PlayersListComponent extends HTMLElement {
           propertyText.textContent--;
           totalText.textContent--;
           ACTION__PLAYERS__UPDATE_PLAYER(key, player);
+          return;
+
+        case 'ACTION__GOTO_PLAYER_EDIT_FORM':
+          location.href = `/#player-edit/${key}`;
           return;
 
         default:

@@ -33,21 +33,10 @@ export class PlayerController {
   }
 
   async create(req: Request, res: Response) {
-    console.log('req', req);
-    const category = new PlayerModel({
-      number: 0,
-      name: 'name',
-      sex: 'man',
-      level: 0,
-      power: 0,
-      class: 'class',
-      race: 0,
-      dice: 0,
-      collar: 'collar',
-    });
-
+    const category = new PlayerModel(req.body.player);
     try {
       await category.save();
+      console.log('category', category);
       res.status(201).json(category);
     } catch (err) {
       errorHandler(res, err);
