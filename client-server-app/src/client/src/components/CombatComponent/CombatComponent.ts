@@ -21,29 +21,15 @@ export class CombatComponent extends HTMLElement {
 
   //** **************** controller **************** */
   private controller(): void {
-    console.log('controller');
-    // const io = require('socket.io-client');
-    // const socket = io.connect();
-    this.emitTest();
+    this.socketHandler();
   }
 
-  private emitTest(event?: Event) {
-    console.log('emitTest');
+  private socketHandler() {
+    const socket = io('http://localhost:3000/api/socket');
 
-    event?.preventDefault();
-
-    // const socket2 = io('http://localhost:3000', {
-    //   path: '/',
-    // });
-
-    // const socket = io.connect('http://localhost:3000');
-
-    // const socket = io('http://localhost:3000'); // <-- хост:порт
-    // socket.on('news', function () {
-    //   console.log('data news 123');
-    //   // socket.emit('my other event', { my: 'data' });
-    // });
-
-    // socket.emit('SEND_MESSAGE', { message: 'message emitTest' });
+    socket.on('news', function (data: any = 'aaaaa') {
+      console.log(data);
+      socket.emit('my other event', { my: 'data' });
+    });
   }
 }

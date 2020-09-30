@@ -132,3 +132,8 @@ npm install -D eslint-config-airbnb
 npm install -D eslint-config-airbnb-typescript
 npm install -D @typescript-eslint/eslint-plugin
 ```
+
+## Socket.IO
+
+- https://coderlessons.com/tutorials/kompiuternoe-programmirovanie/uznaite-socket-io/socket-io-kratkoe-rukovodstvo
+- https://socket.io/docs/server-api/#server-path-value

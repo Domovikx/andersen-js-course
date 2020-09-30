@@ -1,11 +1,11 @@
 import colors from 'colors';
 
 import { PORT_SERVER } from './config/config';
-import { server } from './server';
+import { httpServer } from './server';
 
 const port = process.env.PORT || PORT_SERVER;
 
-server.listen(port, () => {
+httpServer.listen(port, () => {
   console.log(
     colors.bold.yellow(
       `\nhttp://localhost:${port} - Server started - success.\n`,

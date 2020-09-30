@@ -9,6 +9,8 @@ import { MONGO_URI } from './config/config';
 
 import { playerRoute } from './routes/playerRoute';
 
+import { Socket } from 'dgram';
+
 const server = express();
 
 connect(MONGO_URI, {
@@ -44,4 +46,12 @@ server.use(cors());
 // routes
 server.use('/api/player', playerRoute);
 
-export { server };
+// socket.io
+const httpServer = require('http').Server(server);
+const io = require('socket.io')(httpServer);
+io.path('/api/socket');
+io.on('connect', (socket: Socket) => {
+  console.log('connect');
+});
+
+export { httpServer };
