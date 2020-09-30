@@ -36,7 +36,6 @@ export class PlayerController {
     const category = new PlayerModel(req.body.player);
     try {
       await category.save();
-      console.log('category', category);
       res.status(201).json(category);
     } catch (err) {
       errorHandler(res, err);

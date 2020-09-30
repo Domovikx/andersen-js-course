@@ -47,6 +47,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.11.5"
+    "@babel/polyfill": "^7.11.5",
+    "@types/socket.io-client": "^1.4.34",
+    "socket.io-client": "^2.3.0"
   }
 }

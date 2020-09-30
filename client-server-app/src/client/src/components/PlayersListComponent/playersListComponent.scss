@@ -12,6 +12,7 @@ players-list-component {
   .player-name {
     display: inline-block;
   }
+  .cursor-pointer,
   .player-name {
     cursor: pointer;
   }
@@ -59,5 +60,8 @@ players-list-component {
   }
   .wrapper {
     display: flex;
+  }
+  .other-info {
+    max-width: 210px;
   }
 }
