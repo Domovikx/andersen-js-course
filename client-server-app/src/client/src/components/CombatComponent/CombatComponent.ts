@@ -20,7 +20,6 @@ export class CombatComponent extends HTMLElement {
     this.innerHTML = html;
 
     const players = GETTER__PLAYERS__GET_ALL_PLAYERS();
-    console.log('players', players);
 
     const optionsFragment = getOptionsFragment(players);
 
@@ -48,13 +47,40 @@ export class CombatComponent extends HTMLElement {
   private controller(): void {
     const self = this;
 
-    socketHandler();
-
     const form: HTMLFormElement | null = this.querySelector('form');
     form?.addEventListener('change', onChange);
 
+    const socket = io('http://localhost:3000/api/socket');
+    socket.on('MESSAGE_TO_CLIENT', (data: any) => {
+      console.log('object :>> ', data);
+      updateFormData(data);
+    });
+
     function onChange(event: Event) {
       const formData = getFormData();
+      socket.emit('MESSAGE_TO_SERVER', formData);
+    }
+
+    function updateFormData(formData: any) {
+      console.log('formData', formData);
+
+      const {
+        generalPlayerID,
+        generalPlayerBuffs,
+        supportPlayerID,
+        supportPlayerBuffs,
+        monstersAndBuffs,
+      } = formData;
+      console.log('supportPlayerBuffs', supportPlayerBuffs);
+
+      console.log('object 123 :>> ', formData.supportPlayerBuffs);
+
+      const form: HTMLFormElement | null = self.querySelector('form');
+      const generalPlayerBuffsElement: any = form?.querySelector(
+        '[name="generalPlayerBuffs"]',
+      );
+
+      generalPlayerBuffsElement.innerText = supportPlayerBuffs;
     }
 
     function getFormData(): {} {
@@ -95,20 +121,11 @@ export class CombatComponent extends HTMLElement {
 
       return {
         generalPlayerID,
-        supportPlayerID,
         generalPlayerBuffs,
+        supportPlayerID,
         supportPlayerBuffs,
         monstersAndBuffs,
       };
-    }
-
-    function socketHandler() {
-      const socket = io('http://localhost:3000/api/socket');
-
-      socket.on('news', function (data: any = 'aaaaa') {
-        console.log(data);
-        socket.emit('my other event', { my: 'data' });
-      });
     }
   }
 }

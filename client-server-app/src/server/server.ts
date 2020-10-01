@@ -8,8 +8,7 @@ import { Request, Response } from 'express';
 import { MONGO_URI } from './config/config';
 
 import { playerRoute } from './routes/playerRoute';
-
-import { Socket } from 'dgram';
+import { Socket } from 'socket.io';
 
 const server = express();
 
@@ -49,9 +48,21 @@ server.use('/api/player', playerRoute);
 // socket.io
 const httpServer = require('http').Server(server);
 const io = require('socket.io')(httpServer);
-io.path('/api/socket');
-io.on('connect', (socket: Socket) => {
-  console.log('connect');
+
+const connections: any[] = [];
+io.of('/api/socket').on('connect', (socket: Socket) => {
+  connections.push(socket);
+  console.log('socket.io - connect');
+
+  socket.on('disconnect', (date: any) => {
+    console.log('socket.io - disconnect');
+    connections.splice(connections.indexOf(socket), 1);
+  });
+
+  socket.on('MESSAGE_TO_SERVER', (date: any) => {
+    console.log('date', date);
+    socket.emit('MESSAGE_TO_CLIENT', date);
+  });
 });
 
 export { httpServer };
