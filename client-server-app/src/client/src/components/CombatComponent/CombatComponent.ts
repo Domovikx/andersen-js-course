@@ -52,7 +52,6 @@ export class CombatComponent extends HTMLElement {
 
     const socket = io('http://localhost:3000/api/socket');
     socket.on('MESSAGE_TO_CLIENT', (data: any) => {
-      console.log('object :>> ', data);
       updateFormData(data);
     });
 
@@ -62,8 +61,6 @@ export class CombatComponent extends HTMLElement {
     }
 
     function updateFormData(formData: any) {
-      console.log('formData', formData);
-
       const {
         generalPlayerID,
         generalPlayerBuffs,
@@ -71,16 +68,33 @@ export class CombatComponent extends HTMLElement {
         supportPlayerBuffs,
         monstersAndBuffs,
       } = formData;
-      console.log('supportPlayerBuffs', supportPlayerBuffs);
-
-      console.log('object 123 :>> ', formData.supportPlayerBuffs);
 
       const form: HTMLFormElement | null = self.querySelector('form');
+
+      const generalPlayerElement: any = form?.querySelector(
+        '[name="generalPlayer"]',
+      );
+      generalPlayerElement.value = generalPlayerID;
+
       const generalPlayerBuffsElement: any = form?.querySelector(
         '[name="generalPlayerBuffs"]',
       );
+      generalPlayerBuffsElement.value = generalPlayerBuffs;
 
-      generalPlayerBuffsElement.innerText = supportPlayerBuffs;
+      const supportPlayerElement: any = form?.querySelector(
+        '[name="supportPlayer"]',
+      );
+      supportPlayerElement.value = supportPlayerID;
+
+      const supportPlayerBuffsElement: any = form?.querySelector(
+        '[name="supportPlayerBuffs"]',
+      );
+      supportPlayerBuffsElement.value = supportPlayerBuffs;
+
+      const monstersAndBuffsElement: any = form?.querySelector(
+        '[name="monstersAndBuffs"]',
+      );
+      monstersAndBuffsElement.value = monstersAndBuffs;
     }
 
     function getFormData(): {} {

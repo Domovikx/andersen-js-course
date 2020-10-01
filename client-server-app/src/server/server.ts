@@ -61,7 +61,7 @@ io.of('/api/socket').on('connect', (socket: Socket) => {
 
   socket.on('MESSAGE_TO_SERVER', (date: any) => {
     console.log('date', date);
-    socket.emit('MESSAGE_TO_CLIENT', date);
+    socket.broadcast.emit('MESSAGE_TO_CLIENT', date);
   });
 });
 
