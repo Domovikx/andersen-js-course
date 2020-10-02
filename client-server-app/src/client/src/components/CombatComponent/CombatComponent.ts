@@ -52,6 +52,7 @@ export class CombatComponent extends HTMLElement {
     socket.emit('CONNECT_NEW_CLIENT');
     socket.on('SERVER_RESPONSE', (responseFormData: any) => {
       updateFormData(responseFormData);
+      setCounter(responseFormData);
     });
 
     const form: HTMLFormElement | null = this.querySelector('form');
@@ -60,9 +61,10 @@ export class CombatComponent extends HTMLElement {
     function onChange(event: Event) {
       const formData = getFormData();
       socket.emit('REQUEST_SERVER', formData);
+      setCounter(formData);
     }
 
-    function updateFormData(formData: any) {
+    function updateFormData(formData: any): void {
       const {
         generalPlayerID,
         generalPlayerBuffs,
@@ -99,7 +101,7 @@ export class CombatComponent extends HTMLElement {
       monstersAndBuffsElement.value = monstersAndBuffs;
     }
 
-    function getFormData(): {} {
+    function getFormData() {
       const form: HTMLFormElement | null = self.querySelector('form');
 
       const generalPlayerElement:
@@ -144,6 +146,70 @@ export class CombatComponent extends HTMLElement {
         supportPlayerBuffs,
         monstersAndBuffs,
       };
+    }
+
+    function setCounter(formData: any) {
+      const players = GETTER__PLAYERS__GET_ALL_PLAYERS();
+
+      const {
+        generalPlayerID,
+        generalPlayerBuffs,
+        supportPlayerID,
+        supportPlayerBuffs,
+        monstersAndBuffs,
+      } = formData;
+
+      const counterElement: Element | null = self.querySelector(
+        '.total-counter-text',
+      );
+
+      const generalPlayerLevel: number = players[generalPlayerID]?.level || 0;
+      const generalPlayerPower: number = players[generalPlayerID]?.power || 0;
+      const generalPlayerMight: number =
+        generalPlayerLevel + generalPlayerPower;
+
+      let generalPlayerBuffsAmount = 0;
+      if (generalPlayerBuffs) {
+        generalPlayerBuffsAmount = generalPlayerBuffs
+          .split(' ')
+          .reduce((a: string, b: string) => Number(a) + Number(b), 0);
+      }
+
+      const supportPlayerLevel: number = players[supportPlayerID]?.level || 0;
+      const supportPlayerPower: number = players[supportPlayerID]?.power || 0;
+      const supportPlayerMight: number =
+        supportPlayerLevel + supportPlayerPower;
+
+      let supportPlayerBuffsAmount = 0;
+      if (supportPlayerBuffs) {
+        supportPlayerBuffsAmount = supportPlayerBuffs
+          .split(' ')
+          .reduce((a: string, b: string) => Number(a) + Number(b), 0);
+      }
+
+      let monstersAndBuffsAmount = 0;
+      if (monstersAndBuffs) {
+        monstersAndBuffsAmount = monstersAndBuffs
+          .split(' ')
+          .reduce((a: string, b: string) => Number(a) + Number(b), 0);
+      }
+
+      const playersMight =
+        generalPlayerMight +
+        generalPlayerBuffsAmount +
+        supportPlayerMight +
+        supportPlayerBuffsAmount;
+
+      counterElement!.innerHTML =
+        `${generalPlayerMight} + ` +
+        `${generalPlayerBuffsAmount} + ` +
+        `${supportPlayerMight} + ` +
+        `${supportPlayerBuffsAmount} <br>` +
+        `${playersMight} ` +
+        ` vs ` +
+        `${monstersAndBuffsAmount} <br>` +
+        `different: ` +
+        `${playersMight - monstersAndBuffsAmount}`;
     }
   }
 }

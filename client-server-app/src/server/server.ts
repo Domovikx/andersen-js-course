@@ -6,7 +6,6 @@ import morgan from 'morgan';
 import { connect } from 'mongoose';
 import { Request, Response } from 'express';
 import { MONGO_URI } from './config/config';
-import { Socket } from 'socket.io';
 
 import { playerRoute } from './routes/playerRoute';
 import { socketController } from './controllers/socketController';
