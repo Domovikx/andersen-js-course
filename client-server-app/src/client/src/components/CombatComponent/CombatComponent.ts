@@ -21,7 +21,7 @@ export class CombatComponent extends HTMLElement {
 
     const players = GETTER__PLAYERS__GET_ALL_PLAYERS();
 
-    const optionsFragment = getOptionsFragment(players);
+    const optionsFragment: DocumentFragment = getOptionsFragment(players);
 
     const generalPlayer = this.querySelector(`[name="generalPlayer"]`);
     generalPlayer?.append(optionsFragment.cloneNode(true));
@@ -47,17 +47,19 @@ export class CombatComponent extends HTMLElement {
   private controller(): void {
     const self = this;
 
+    // socket
+    const socket = io('http://localhost:3000/api/socket');
+    socket.emit('CONNECT_NEW_CLIENT');
+    socket.on('SERVER_RESPONSE', (responseFormData: any) => {
+      updateFormData(responseFormData);
+    });
+
     const form: HTMLFormElement | null = this.querySelector('form');
     form?.addEventListener('change', onChange);
 
-    const socket = io('http://localhost:3000/api/socket');
-    socket.on('MESSAGE_TO_CLIENT', (data: any) => {
-      updateFormData(data);
-    });
-
     function onChange(event: Event) {
       const formData = getFormData();
-      socket.emit('MESSAGE_TO_SERVER', formData);
+      socket.emit('REQUEST_SERVER', formData);
     }
 
     function updateFormData(formData: any) {
@@ -104,34 +106,36 @@ export class CombatComponent extends HTMLElement {
         | HTMLSelectElement
         | null
         | undefined = form?.querySelector('[name="generalPlayer"]');
-      const generalPlayerID: string | undefined = generalPlayerElement?.value;
+      const generalPlayerID: string | null =
+        generalPlayerElement?.value || null;
 
       const supportPlayerElement:
         | HTMLSelectElement
         | null
         | undefined = form?.querySelector('[name="supportPlayer"]');
-      const supportPlayerID: string | undefined = supportPlayerElement?.value;
+      const supportPlayerID: string | null =
+        supportPlayerElement?.value || null;
 
       const generalPlayerBuffsElement:
         | HTMLInputElement
         | null
         | undefined = form?.querySelector('[name="generalPlayerBuffs"]');
-      const generalPlayerBuffs: string | undefined =
-        generalPlayerBuffsElement?.value;
+      const generalPlayerBuffs: string | null =
+        generalPlayerBuffsElement?.value || null;
 
       const supportPlayerBuffsElement:
         | HTMLInputElement
         | null
         | undefined = form?.querySelector('[name="supportPlayerBuffs"]');
-      const supportPlayerBuffs: string | undefined =
-        supportPlayerBuffsElement?.value;
+      const supportPlayerBuffs: string | null =
+        supportPlayerBuffsElement?.value || null;
 
       const monstersAndBuffsElement:
         | HTMLInputElement
         | null
         | undefined = form?.querySelector('[name="monstersAndBuffs"]');
-      const monstersAndBuffs: string | undefined =
-        monstersAndBuffsElement?.value;
+      const monstersAndBuffs: string | null =
+        monstersAndBuffsElement?.value || null;
 
       return {
         generalPlayerID,

@@ -9,10 +9,20 @@ nav-component {
   .btn {
     margin-left: 0.25rem;
     display: inline-flex;
+    color: dimgray;
     i {
       margin-right: 5px;
     }
+    &:hover {
+      color: black;
+    }
   }
+  .btn.focus,
+  .btn:focus {
+    outline: 0;
+    box-shadow: none;
+  }
+
   .btn-icon {
     padding: 6px 8px;
     border-color: unset;
@@ -20,5 +30,8 @@ nav-component {
     i {
       margin-right: 0;
     }
+  }
+  .nav-link:first-child {
+    padding-right: 0;
   }
 }

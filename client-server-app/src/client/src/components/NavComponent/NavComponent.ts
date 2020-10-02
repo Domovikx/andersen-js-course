@@ -9,11 +9,17 @@ export class NavComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    this.innerHTML = html;
+    this.view();
+    this.controller();
+  }
 
-    /** ================= Controller =================
-     * Подписка на события и управление
-     */
+  //** **************** view ********************** */
+  private view(): void {
+    this.innerHTML = html;
+  }
+
+  //** **************** controller **************** */
+  private controller(): void {
     this.addEventListener('click', onActon);
 
     async function onActon(event: any) {

@@ -1,5 +1,5 @@
 // @ts-ignore: disable-next-line
-// import html from './routerOutlet.html';
+import html from './routerOutlet.html';
 import './routerOutlet.scss';
 
 export class RouterOutlet extends HTMLElement {
@@ -8,40 +8,41 @@ export class RouterOutlet extends HTMLElement {
   }
 
   connectedCallback() {
+    this.view();
+    this.controller();
+  }
+
+  //** **************** view ********************** */
+  private view(): void {
+    this.innerHTML = html;
+  }
+
+  //** **************** controller **************** */
+  private controller(): void {
     const self = this;
 
-    /** ================= VIEW =================
-     * Получение стейта и его рендеринг
-     */
+    window.addEventListener('hashchange', routerHandler);
+    routerHandler();
 
-    const renderRouterOutlet = (tag?: any) => {
-      this.innerHTML = tag || `Well let's play :)`;
-    };
-
-    /** ================= Controller =================
-     * Подписка на события и управление
-     */
-
-    function init() {
-      window.addEventListener('hashchange', routerHandler);
-      routerHandler();
+    function routerHandler(): void {
+      const { rout, id } = getRouterInfo();
+      const routes: any = {
+        '': '<home-page-component></home-page-component>',
+        'players-list': '<players-list-component></players-list-component>',
+        'player-edit': `<player-edit-form data-key="${id}"></player-edit-form>`,
+        combat: '<combat-component></combat-component>',
+      };
+      setRoutTag(routes[rout]);
     }
-    init();
 
-    function getRouterInfo() {
+    function getRouterInfo(): { rout: string; id: string } {
       const hash = location.hash ? location.hash.slice(1) : '';
       const [rout, id] = hash.split('/');
       return { rout, id };
     }
 
-    function routerHandler() {
-      const { rout, id } = getRouterInfo();
-      const routes: any = {
-        'players-list': '<players-list-component></players-list-component>',
-        'player-edit': `<player-edit-form data-key="${id}"></player-edit-form>`,
-        combat: '<combat-component></combat-component>',
-      };
-      renderRouterOutlet(routes[rout]);
+    function setRoutTag(tag: string): void {
+      self.innerHTML = tag;
     }
   }
 }

@@ -1,6 +1,7 @@
 // @ts-ignore: disable-next-line
 import html from './playerEditForm.html';
 import './playerEditForm.scss';
+
 import { PLAYER } from '../../constants/player';
 import {
   ACTION__PLAYERS__CREATE_PLAYER,
@@ -15,26 +16,27 @@ export class PlayerEditForm extends HTMLElement {
   }
 
   connectedCallback() {
-    const self = this;
-    /** ================= VIEW =================
-     * Получение стейта и его рендеринг
-     */
+    this.view();
+    this.controller();
+  }
+
+  //** **************** view **************** */
+  private view(): void {
     this.innerHTML = html;
+  }
 
-    /** ================= Controller =================
-     * Подписка на события и управление
-     */
-    const key: any = this.getAttribute('data-key');
+  //** **************** controller **************** */
+  private controller(): void {
+    const self = this;
 
-    function init() {
-      if (key) {
-        setInitialValues(key);
-      }
-      self.addEventListener('click', onActon);
+    this.addEventListener('click', onActon);
+
+    const key: string = this.getAttribute('data-key') || '';
+    if (key) {
+      setInitialValues(key);
     }
-    init();
 
-    function setInitialValues(key: any) {
+    function setInitialValues(key: string) {
       const player = GETTER__PLAYERS__GET_PLAYER_BY_ID(key);
       Object.entries(player).forEach(([property, value]) => {
         const element: any = self.querySelector(`form [name="${property}"]`);
@@ -45,7 +47,7 @@ export class PlayerEditForm extends HTMLElement {
     async function onActon(event: Event) {
       event.preventDefault();
       const target: any = event.target;
-      const action: String | null =
+      const action: string | null =
         target?.getAttribute('data-action') ||
         target.parentElement?.getAttribute('data-action');
       if (!action) return;

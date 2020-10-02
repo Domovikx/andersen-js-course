@@ -1,8 +1,8 @@
 // @ts-ignore: disable-next-line
-import html from './headerComponent.html';
-import './headerComponent.scss';
+import html from './homePageComponent.html';
+import './homePageComponent.scss';
 
-export class HeaderComponent extends HTMLElement {
+export class HomePageComponent extends HTMLElement {
   constructor() {
     super();
   }
@@ -12,7 +12,7 @@ export class HeaderComponent extends HTMLElement {
     this.controller();
   }
 
-  //** **************** view ********************** */
+  //** **************** view **************** */
   private view(): void {
     this.innerHTML = html;
   }

@@ -18,6 +18,6 @@
     "moduleResolution": "node",
     "plugins": []
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/server/controllers/SocketControllerts"],
   "exclude": ["node_modules", ".vscode"]
 }

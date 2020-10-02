@@ -12,6 +12,7 @@ import NavComponent from '../NavComponent';
 import PlayerEditForm from '../PlayerEditForm';
 import PlayersListComponent from '../PlayersListComponent';
 import CombatComponent from '../CombatComponent';
+import HomePageComponent from '../HomePageComponent';
 
 customElements.define('router-outlet', RouterOutlet);
 
@@ -21,6 +22,7 @@ customElements.define('nav-component', NavComponent);
 customElements.define('player-edit-form', PlayerEditForm);
 customElements.define('players-list-component', PlayersListComponent);
 customElements.define('combat-component', CombatComponent);
+customElements.define('home-page-component', HomePageComponent);
 
 export class AppComponent extends HTMLElement {
   constructor() {
@@ -28,20 +30,17 @@ export class AppComponent extends HTMLElement {
   }
 
   connectedCallback() {
-    /** ================= VIEW =================
-     * Получение стейта и его рендеринг
-     */
+    this.view();
+    this.controller();
+  }
 
-    const renderAppComponent = () => {
-      this.innerHTML = html;
-    };
+  //** **************** view **************** */
+  private view(): void {
+    this.innerHTML = html;
+  }
 
-    renderAppComponent();
-
-    /** ================= Controller =================
-     * Подписка на события и управление
-     */
-
+  //** **************** controller **************** */
+  private controller(): void {
     ACTION__PLAYERS__GET_ALL_PLAYERS();
   }
 }
