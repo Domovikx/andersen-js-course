@@ -1,0 +1,130 @@
+<section class="card card-body">
+  <span class="card-title">
+    <header>Player options</header>
+
+    <button
+      class="btn btn-outline-secondary btn-icon material-icons"
+      type="button"
+      data-action="ACTION__PLAYERS__DELETE_PLAYER"
+    >
+      <i class="material-icons">delete_forever</i>
+    </button>
+
+    <button
+      class="btn btn-outline-secondary btn-icon btn-submit material-icons"
+      data-action="ACTION__PLAYERS__UPDATE_PLAYER_and_CLOSE"
+      data-key="key"
+    >
+      <i class="material-icons">save</i>
+    </button>
+  </span>
+
+  <form>
+    <div class="form-group">
+      <label class="form-label">Name</label>
+      <input type="text" class="form-control" name="name" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Color</label>
+      <select class="form-control" name="color">
+        <option selected>white</option>
+        <option style="background-color: orangered">orangered</option>
+        <option style="background-color: orange">orange</option>
+        <option style="background-color: yellow">yellow</option>
+        <option style="background-color: mediumpurple">mediumpurple</option>
+        <option style="background-color: greenyellow">greenyellow</option>
+        <option style="background-color: lightskyblue">lightskyblue</option>
+      </select>
+    </div>
+
+    <!-- TODO: сделать через текст, с возможностью сложения -->
+    <div class="form-group">
+      <label class="form-label">Level</label>
+      <input type="number" class="form-control" name="level" />
+    </div>
+
+    <!-- TODO: сделать через текст, с возможностью сложения -->
+    <div class="form-group">
+      <label class="form-label">Power</label>
+      <input type="number" class="form-control" name="power" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Number player</label>
+      <input type="number" class="form-control" name="number" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Sex</label>
+      <select class="form-control" name="sex">
+        <option selected>man</option>
+        <option>woman</option>
+        <option>asexual</option>
+      </select>
+    </div>
+
+    <!-- TODO: можно сделать через checkbox, для суперклассов -->
+    <div class="form-group">
+      <label class="form-label">Class</label>
+      <input type="text" class="form-control" name="class" />
+    </div>
+
+    <!-- TODO: можно сделать через checkbox, для суперрассы -->
+    <div class="form-group">
+      <label class="form-label">Race</label>
+      <input type="text" class="form-control" name="race" />
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Dice</label>
+      <span class="input-group mb-3">
+        <input
+          type="number"
+          class="form-control"
+          name="dice"
+          readonly
+          value="1"
+        />
+        <div class="input-group-append">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            data-action="ACTION__DICE__GET_RANDOM"
+          >
+            <i class="material-icons">casino</i>
+            get random
+          </button>
+        </div>
+      </span>
+    </div>
+
+    <div class="float-right">
+      <button
+        class="btn btn-primary btn-submit"
+        data-action="ACTION__PLAYERS__CREATE_PLAYER"
+      >
+        <i class="material-icons">person_add</i>
+        Save as new player
+      </button>
+
+      <button
+        class="btn btn-primary btn-submit"
+        data-action="ACTION__PLAYERS__UPDATE_PLAYER"
+        data-key="key"
+      >
+        <i class="material-icons">save</i>
+        Save
+      </button>
+
+      <button
+        class="btn btn-primary btn-submit"
+        data-action="ACTION__PLAYERS__UPDATE_PLAYER_and_CLOSE"
+        data-key="key"
+      >
+        <i class="material-icons">save</i>
+        Save and close
+      </button>
+    </div>
+  </form>
+</section>

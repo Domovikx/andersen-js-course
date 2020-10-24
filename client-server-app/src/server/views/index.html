@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Server to Munchkin</title>
+    <style>
+      * {
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        background-color: gainsboro;
+      }
+      .wrapper {
+        max-width: fit-content;
+        margin: 0 auto;
+      }
+      h1 {
+        font-size: 200%;
+        color: #006b00;
+      }
+      h1,
+      .sub-tittle {
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h1>Server to Munchkin</h1>
+      <p class="sub-tittle">Сервер успешно запущен!</p>
+      <ul>
+        <li><a href="api">api</a> - тестовый API - GET</li>
+        <li>
+          <a href="api/player/all">api/player/all</a> - API - GET - players
+        </li>
+        <li>
+          <a href="api/player/:id">api/player/:id</a> - API - GET - player by ID
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,92 @@
+<template class="template-card">
+  <section class="card card-body">
+    <header
+      class="player-name"
+      data-key="key"
+      data-action="ACTION__GOTO_PLAYER_EDIT_FORM"
+    >
+      player name
+    </header>
+
+    <section class="other-info">
+      <span class="sex-text">sex</span>
+      <span class="class-text">class</span>
+      <span class="race-text">race</span>
+      <span class="dice-text">dice</span>
+    </section>
+
+    <div class="wrapper">
+      <section class="general-info">
+        <section class="player-info">
+          <button
+            class="btn-remove-player btn material-icons"
+            data-key="key"
+            data-action="ACTION__PLAYERS__DELETE_PLAYER"
+          >
+            delete_forever
+          </button>
+
+          <div class="player-color">
+            <div class="total-text" data-key="key">100</div>
+          </div>
+
+          <button
+            class="btn-open-player btn material-icons"
+            data-key="key"
+            data-action="ACTION__GOTO_PLAYER_EDIT_FORM"
+          >
+            engineering
+          </button>
+        </section>
+
+        <section class="level">
+          <span class="level-header material-icons">stars</span>
+
+          <button
+            class="btn-level-minus btn material-icons"
+            data-key="key"
+            data-action="ACTION__PLAYERS__PROPERTY_DECREASE"
+            data-property="level"
+          >
+            arrow_circle_down
+          </button>
+
+          <span class="level-text" data-key="key">100</span>
+
+          <button
+            class="btn-level-plus btn material-icons"
+            data-key="key"
+            data-action="ACTION__PLAYERS__PROPERTY_INCREASE"
+            data-property="level"
+          >
+            arrow_circle_up
+          </button>
+        </section>
+
+        <section class="power">
+          <span class="power-header material-icons">gavel</span>
+
+          <button
+            class="btn-power-minus btn material-icons"
+            data-key="key"
+            data-action="ACTION__PLAYERS__PROPERTY_DECREASE"
+            data-property="power"
+          >
+            arrow_circle_down
+          </button>
+
+          <span class="power-text" data-key="key">100</span>
+
+          <button
+            class="btn-power-plus btn material-icons"
+            data-key="key"
+            data-action="ACTION__PLAYERS__PROPERTY_INCREASE"
+            data-property="power"
+          >
+            arrow_circle_up
+          </button>
+        </section>
+      </section>
+    </div>
+  </section>
+</template>

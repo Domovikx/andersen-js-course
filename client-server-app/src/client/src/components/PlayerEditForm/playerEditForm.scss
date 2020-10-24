@@ -1,0 +1,27 @@
+player-edit-form {
+  .card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    header {
+      flex-grow: 1;
+    }
+  }
+
+  .btn {
+    margin-left: 0.25rem;
+    display: inline-flex;
+    i {
+      margin-right: 5px;
+    }
+  }
+  .btn-icon {
+    padding: 6px 8px;
+    border-color: unset;
+    border: 0;
+    i {
+      margin-right: 0;
+    }
+  }
+}

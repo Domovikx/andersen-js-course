@@ -1,0 +1,70 @@
+players-list-component {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+
+  .card {
+    display: grid;
+    justify-content: center;
+  }
+
+  .level-header,
+  .power-header,
+  .total-header,
+  .player-name {
+    display: inline-block;
+  }
+  .cursor-pointer,
+  .player-name {
+    cursor: pointer;
+    text-align: center;
+  }
+  .player-color {
+    display: grid;
+    place-content: center;
+    height: 50px;
+    width: 50px;
+    border: 6px solid orangered;
+    border-radius: 50%;
+  }
+  .player-info {
+    display: flex;
+    align-items: center;
+  }
+  .btn {
+    padding: 0;
+    margin: 10px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    font-size: 30px;
+
+    opacity: 0.2;
+    transition: 0.5s;
+
+    &:hover {
+      opacity: 1;
+      background-color: antiquewhite;
+    }
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+    }
+  }
+  .level,
+  .power {
+    display: flex;
+    align-items: center;
+  }
+  .level-header,
+  .power-header {
+    opacity: 0.8;
+    font-size: 30px;
+  }
+  .wrapper {
+    display: grid;
+    justify-content: center;
+  }
+  section.other-info {
+    justify-self: center;
+  }
+}

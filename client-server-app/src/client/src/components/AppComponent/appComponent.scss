@@ -1,0 +1,29 @@
+@import './rest.scss';
+
+*,
+html,
+body,
+span,
+button {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  background-color: #e0e0e0;
+}
+
+* {
+  box-sizing: border-box;
+  header {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+  .btn {
+    margin-bottom: 0.25rem;
+  }
+}

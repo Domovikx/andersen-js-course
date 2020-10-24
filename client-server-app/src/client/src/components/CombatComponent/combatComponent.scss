@@ -1,0 +1,20 @@
+combat-component {
+  .total-counter-text {
+    font-size: 1.25rem;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .text-muted {
+    color: #6c757d;
+  }
+  .form-text {
+    display: block;
+    margin-top: 0.25rem;
+  }
+  .small,
+  small {
+    font-size: 80%;
+    font-weight: 400;
+  }
+}

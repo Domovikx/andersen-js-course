@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-russian",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    "CoenraadS.bracket-pair-colorizer",
+    "xabikos.JavaScriptSnippets",
+    "shd101wyy.markdown-preview-enhanced",
+    "bierner.lit-html"
+  ]
+}

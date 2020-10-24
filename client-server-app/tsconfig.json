@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "sourceMap": true,
+
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": true,
+
+    "noEmitOnError": true,
+    "strict": true,
+
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "moduleResolution": "node",
+    "plugins": []
+  },
+  "include": ["src/**/*.ts", "src/server/controllers/SocketControllerts"],
+  "exclude": ["node_modules", ".vscode"]
+}

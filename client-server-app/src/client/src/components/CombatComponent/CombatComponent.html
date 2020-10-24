@@ -1,0 +1,77 @@
+<section class="card card-body">
+  <form>
+    <header>Combat Component on Socket.IO</header>
+
+    <div class="form-group">
+      <label>General player</label>
+
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <select name="generalPlayer" class="form-control">
+            <option selected value="0">Select Player</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <input
+            name="generalPlayerBuffs"
+            type="text"
+            class="form-control"
+            placeholder="General player buffs"
+          />
+          <small class="form-text text-muted">
+            General player buffs. Integer value separated by space.
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Support player</label>
+
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <select name="supportPlayer" class="form-control">
+            <option selected value="0">Select Player</option>
+          </select>
+        </div>
+        <div class="col-md-6 mb-3">
+          <input
+            name="supportPlayerBuffs"
+            type="text"
+            class="form-control"
+            placeholder="Support player buffs"
+          />
+          <small class="form-text text-muted">
+            Support player buffs. Integer value separated by space.</small
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Monsters and their buffs. Integer value separated by space.</label>
+
+      <div class="form-row">
+        <div class="col-md-9 mb-3">
+          <input
+            name="monstersAndBuffs"
+            type="text"
+            class="form-control"
+            placeholder="Monsters and their buffs"
+          />
+          <small class="form-text text-muted"> Monsters and their buffs </small>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <button class="btn btn-secondary btn-block" type="reset">
+            Очистить форму
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="card">
+    <div class="card-body total-counter-text">000</div>
+  </div>
+</section>
