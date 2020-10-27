@@ -16,31 +16,27 @@
  * generator.next(); -> 'Complete!'
  */
 
-export function createGenerator(arr) {
-  const arrCopy = [...arr];
+// Решение через класс
+class CreateGenerator {
+  constructor(arr) {
+    this.arr = arr;
+  }
 
-  return {
-    next() {
-      if (!arrCopy[0]) {
-        return 'Complete!';
-      }
-      return arrCopy.shift();
-    },
-  };
+  next() {
+    if (!this.arr[0]) {
+      return 'Complete!';
+    }
+    return this.arr.shift();
+  }
 }
 
 const arr = [1, '6', 3, 2];
-const generator = createGenerator(arr);
-console.log('generator :>> ', generator);
+const generator = new CreateGenerator(arr);
 
 console.log('generator.next(); :>> ', generator.next());
 console.log('generator.next(); :>> ', generator.next());
 console.log('generator.next(); :>> ', generator.next());
 console.log('generator.next(); :>> ', generator.next());
-
-console.log('generator.next(); :>> ', generator.next());
 console.log('generator.next(); :>> ', generator.next());
 
-console.log('arr :>> ', arr);
-
-export default createGenerator;
+export default CreateGenerator;
