@@ -1,0 +1,5 @@
+export const RECIPE_LIST__ADD = 'RECIPE_LIST__ADD';
+export const RECIPE_LIST__REMOVE = 'RECIPE_LIST__REMOVE';
+
+export const RECIPE_LIST__PLUS = 'RECIPE_LIST__PLUS';
+export const RECIPE_LIST__MINUS = 'RECIPE_LIST__MINUS';

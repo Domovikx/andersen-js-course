@@ -1,0 +1,52 @@
+{
+  "name": "oop-mvc-crafting",
+  "version": "1.0.0",
+  "description": "oop mvc crafting",
+  "private": true,
+  "scripts": {
+    "dev": "webpack --mode development",
+    "d": "webpack --mode development",
+    "start": "webpack-dev-server --mode development --open --watch",
+    "s": "webpack-dev-server --mode development --open --watch",
+    "build": "webpack --mode production",
+    "b": "webpack --mode production"
+  },
+  "browserslist": "> 0.25%, not dead",
+  "keywords": [
+    "oop",
+    "mvc",
+    "crafting"
+  ],
+  "author": "Domovikx <domovikx@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-typescript": "^7.10.4",
+    "@typescript-eslint/eslint-plugin": "^4.0.1",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.1.0",
+    "css-loader": "^4.2.2",
+    "css-minimizer-webpack-plugin": "^1.1.2",
+    "eslint": "^7.8.1",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-typescript": "^9.0.0",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.4.1",
+    "mini-css-extract-plugin": "^0.11.0",
+    "node-sass": "^4.14.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "sass-loader": "^10.0.1",
+    "terser-webpack-plugin": "^4.1.0",
+    "typescript": "^4.0.2",
+    "typescript-lit-html-plugin": "^0.9.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.11.5",
+    "lit-html": "^1.3.0"
+  }
+}
