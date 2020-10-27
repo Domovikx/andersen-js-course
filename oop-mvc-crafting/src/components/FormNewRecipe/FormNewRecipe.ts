@@ -1,5 +1,4 @@
 import store from '../../redux/helpers/store';
-import { html, render } from 'lit-html';
 
 import './formNewRecipe.scss';
 
@@ -18,6 +17,8 @@ export class FormNewRecipe extends HTMLElement {
   }
 
   connectedCallback() {
+    const self = this;
+
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
@@ -27,8 +28,7 @@ export class FormNewRecipe extends HTMLElement {
     const renderView = (ingredientsList: any, formNewRecipeState: any) => {
       const ingredientsKeys = Object.keys(ingredientsList);
 
-      render(
-        html`
+      this.innerHTML = `
           <h3 data-btn-key="COLLAPSE_ACTION">
             Adding a new recipe
           </h3>
@@ -36,11 +36,11 @@ export class FormNewRecipe extends HTMLElement {
           <div class="collapse show">
             <form id="form_new_recipe">
               <div class="input-group mb-1">
-                <select class="custom-select" name="select_ingredient">
+                <select class="custom-select select-ingredient" name="select_ingredient">
                   ${ingredientsKeys.map(
                     (key) =>
-                      html`
-                        <option value=${key}> ${key}</option>
+                      `
+                        <option value="${key}"> ${key}</option>
                       `,
                   )}
                 </select>
@@ -82,32 +82,32 @@ export class FormNewRecipe extends HTMLElement {
               </div>
             </form>
 
-            <!-- TODO: тут можно делать декомпозицию -->
             <ul class="list-group" id="pre_list_ingredients">
-              ${Object.entries(formNewRecipeState).map(
-                ([key, val]) =>
-                  html`
+              ${Object.entries(formNewRecipeState)
+                .map(
+                  ([key, val]) =>
+                    `
                     <li class="list-group-item">
                       ${key} : ${val}
 
                       <span class="btn-group">
                         <button
                           class="btn btn-lg material-icons"
-                          data-btn-value=${key}
+                          data-btn-value="${key}"
                           data-btn-key="FORM_NEW_RECIPE__INGREDIENT_PLUS"
                         >
                           add_box
                         </button>
                         <button
                           class="btn btn-lg material-icons"
-                          data-btn-value=${key}
+                          data-btn-value="${key}"
                           data-btn-key="FORM_NEW_RECIPE__INGREDIENT_MINUS"
                         >
                           indeterminate_check_box
                         </button>
                         <button
                           class="btn btn-lg material-icons"
-                          data-btn-value=${key}
+                          data-btn-value="${key}"
                           data-btn-key="FORM_NEW_RECIPE__INGREDIENT_REMOVE"
                         >
                           delete_sweep
@@ -115,12 +115,11 @@ export class FormNewRecipe extends HTMLElement {
                       </span>
                     </li>
                   `,
-              )}
+                )
+                .join('')}
             </ul>
           </div>
-        `,
-        this,
-      );
+        `;
     };
 
     renderView(ingredientsList, formNewRecipeState);
@@ -136,7 +135,6 @@ export class FormNewRecipe extends HTMLElement {
      * Подписка на события и управление
      */
 
-    const formNewRecipe: any = document.getElementById('form_new_recipe');
     this.addEventListener('click', onAction, false);
 
     function onAction(event: Event | any) {
@@ -145,14 +143,13 @@ export class FormNewRecipe extends HTMLElement {
       const key: string | null = target.getAttribute('data-btn-key');
       const btnValue: string | null = target.getAttribute('data-btn-value');
 
-      let recipeKey;
+      let recipeKey: any;
+      let recipeNameEl: any;
       let recipeValue;
 
       switch (key) {
         case 'COLLAPSE_ACTION':
-          const collapseElement: any = document.querySelector(
-            `form-new-recipe .collapse`,
-          );
+          const collapseElement: any = self.querySelector(`.collapse`);
           if (collapseElement.classList.contains('show')) {
             collapseElement.classList.remove('show');
           } else {
@@ -161,13 +158,16 @@ export class FormNewRecipe extends HTMLElement {
           return;
 
         case 'FORM_NEW_RECIPE__ADD_INGREDIENT':
-          recipeKey = formNewRecipe.elements['select_ingredient'].value;
-          recipeValue;
+          let selectIngredientEl: any = self.querySelector(
+            '.select-ingredient',
+          );
+          recipeKey = selectIngredientEl.value;
           store.dispatch(addIngredient(recipeKey));
           return;
 
         case 'RECIPE_LIST__ADD':
-          recipeKey = formNewRecipe.elements['recipe_name'].value;
+          recipeNameEl = self.querySelector('.recipe-name');
+          recipeKey = recipeNameEl.value;
           if (!recipeKey) return alert('нужно добавить имя');
           recipeValue = store.getState().formNewRecipe;
           if (Object.keys(recipeValue).length === 0)
@@ -184,9 +184,7 @@ export class FormNewRecipe extends HTMLElement {
           return;
 
         case 'FORM_NEW_RECIPE__CLEAR_FORM':
-          const recipeName: any = document.querySelector(
-            'form-new-recipe .recipe-name',
-          );
+          const recipeName: any = self.querySelector('.recipe-name');
           recipeName.value = '';
           store.dispatch(clearForm());
           return;

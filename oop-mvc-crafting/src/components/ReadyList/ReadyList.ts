@@ -1,5 +1,4 @@
 import store from '../../redux/helpers/store';
-import { html, render } from 'lit-html';
 
 import './readyList.scss';
 import { readyListRemove } from '../../redux/modules/readyList/readyListAction';
@@ -14,16 +13,18 @@ export class ReadyList extends HTMLElement {
   }
 
   connectedCallback() {
+    const self = this;
+
     /** ================= VIEW =================
      * Получение стейта и его рендеринг
      */
     const state = store.getState();
 
     const renderView = (readyList: any) => {
-      render(
-        html`
-          ${Object.keys(readyList).length !== 0
-            ? html`
+      this.innerHTML = `
+          ${
+            Object.keys(readyList).length !== 0
+              ? `
                 <h3
                   data-btn-value="COLLAPSE_ACTION"
                   data-btn-key="COLLAPSE_BLOCK"
@@ -31,23 +32,24 @@ export class ReadyList extends HTMLElement {
                   Ready List
                 </h3>
               `
-            : ''}
+              : ''
+          }
           <div class="collapse show" data-collapse="COLLAPSE_BLOCK">
-            ${Object.entries(readyList).map(
-              ([key, { count, recipeList }]: any) => {
-                return html`
+            ${Object.entries(readyList)
+              .map(([key, { count, recipeList }]: any) => {
+                return `
                   <div class="card">
                     <div
                       class="card-header"
                       data-btn-value="COLLAPSE_ACTION"
-                      data-btn-key=${key}
+                      data-btn-key="${key}"
                     >
                       <span class="content-text">${key} : ${count}</span>
                       <span class="btn-group">
                         <button
                           class="btn btn-lg material-icons"
                           data-btn-value="READY_LIST__REMOVE"
-                          data-btn-key=${key}
+                          data-btn-key="${key}"
                         >
                           delete_sweep
                         </button>
@@ -55,7 +57,7 @@ export class ReadyList extends HTMLElement {
                         <button
                           class="btn btn-lg material-icons"
                           data-btn-value="READY_LIST__DISASSEMBLE"
-                          data-btn-key=${key}
+                          data-btn-key="${key}"
                         >
                           gavel
                         </button>
@@ -66,26 +68,26 @@ export class ReadyList extends HTMLElement {
                       <div
                         class="collapse card-body"
                         aria-labelledby="headingOne"
-                        data-collapse=${key}
+                        data-collapse="${key}"
                       >
                         <ul>
-                          ${Object.entries(recipeList).map(
-                            ([name, value]) =>
-                              html`
+                          ${Object.entries(recipeList)
+                            .map(
+                              ([name, value]) =>
+                                `
                                 <li>${name} : ${value}</li>
                               `,
-                          )}
+                            )
+                            .join('')}
                         </ul>
                       </div>
                     </div>
                   </div>
                 `;
-              },
-            )}
+              })
+              .join('')}
           </div>
-        `,
-        this,
-      );
+        `;
     };
 
     renderView(state.readyList);
@@ -112,8 +114,8 @@ export class ReadyList extends HTMLElement {
 
       switch (value) {
         case 'COLLAPSE_ACTION':
-          const collapseElement: any = document.querySelector(
-            `ready-list [data-collapse="${key}"]`,
+          const collapseElement: any = self.querySelector(
+            `[data-collapse="${key}"]`,
           );
           if (collapseElement.classList.contains('show')) {
             collapseElement.classList.remove('show');
